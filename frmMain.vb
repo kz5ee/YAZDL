@@ -1,20 +1,21 @@
 ﻿Imports System.Net
+Imports System.IO
+Imports ZDoom_Launcher.WAD.IO
+
+
 
 
 Public Class frmMain
-    Public RunString As String = (txtPath.Text & "\zxoom.exe")
+    'Public RunString As String = (txtPath.Text & "\zxoom.exe")
 
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnZDoomDir.Click
+    Private Sub btnZDoomDir_Click(sender As Object, e As EventArgs) Handles btnZDoomDir.Click
         Dim ZDoomFolder As String
 
-        fbdZDoom.ShowDialog()
-        ZDoomFolder = fbdZDoom.SelectedPath
-
-        If ZDoomFolder <> "" Then
+        If ofdZDoomExe.ShowDialog = Windows.Forms.DialogResult.OK AndAlso ofdZDoomExe.FileName <> "" Then
+            ZDoomFolder = Path.GetDirectoryName(ofdZDoomExe.FileName)
+            txtZDoomCommand.Text = ofdZDoomExe.FileName
             GetWadFiles(ZDoomFolder)
             txtPath.Text = ZDoomFolder
-            My.Settings.ZDoomDirectory = ZDoomFolder
         End If
 
 
@@ -29,13 +30,27 @@ Public Class frmMain
 
     Private Sub GetWadFiles(ByVal Folder As String)
         ' make a reference to a directory
-        Dim di As New IO.DirectoryInfo(Folder)
-        Dim diar1 As IO.FileInfo() = di.GetFiles("*.WAD")
-        Dim dra As IO.FileInfo
+        Dim dir As New IO.DirectoryInfo(Folder)
+        Dim WADList As IO.FileInfo() = dir.GetFiles("*.wad")
+        'Dim WADList As IO.FileInfo() = dir.GetFiles.Where(Function(fi) fi.Extension.ToLower = ".wad" OrElse fi.Extension.ToLower = ".pk3" OrElse fi.Extension.ToLower = ".pk7").ToArray
+        Dim WADFile As IO.FileInfo
+        Dim IsIWAD As Boolean
 
         'list the names of all files in the specified directory
-        For Each dra In diar1
-            lstWads.Items.Add(dra)
+        For Each WADFile In WADList
+            If Path.GetExtension(WADFile.ToString).ToLower = ".wad" Then
+
+
+                Dim TestWADFile As New WAD.IO.WAD(Folder & "\" & WADFile.ToString)
+                IsIWAD = (TestWADFile.TestWADType = WAD.IO.WAD.IWAD)
+                If (IsIWAD = True) Then
+                    lstIWads.Items.Add(WADFile)
+                Else
+                    lstPWADPkx.Items.Add(WADFile)
+                End If
+            ElseIf Path.GetExtension(WADFile.ToString).ToLower <> ".wad" Then
+                lstPWADPkx.Items.Add(WADFile)
+            End If
         Next
 
     End Sub
@@ -75,6 +90,8 @@ Public Class frmMain
     Private Sub btnRunZDoom_Click(sender As Object, e As EventArgs) Handles btnRunZDoom.Click
 
 
-        Process.Start(txtPath.Text & "\zdoom.exe")
+        Process.Start(txtZDoomCommand.Text)
     End Sub
+
+
 End Class

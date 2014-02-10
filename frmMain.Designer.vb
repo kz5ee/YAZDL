@@ -22,31 +22,38 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.lstWads = New System.Windows.Forms.ListBox()
+        Me.lstIWads = New System.Windows.Forms.ListBox()
         Me.btnZDoomDir = New System.Windows.Forms.Button()
         Me.txtPath = New System.Windows.Forms.TextBox()
-        Me.fbdZDoom = New System.Windows.Forms.FolderBrowserDialog()
-        Me.grpNetPlay = New System.Windows.Forms.GroupBox()
+        Me.lblPlayers = New System.Windows.Forms.Label()
+        Me.cboPlayers = New System.Windows.Forms.ComboBox()
+        Me.lblRemoteHost = New System.Windows.Forms.Label()
         Me.lblIPValidity = New System.Windows.Forms.Label()
         Me.txtIPAddress = New System.Windows.Forms.TextBox()
         Me.radHost = New System.Windows.Forms.RadioButton()
         Me.radJoin = New System.Windows.Forms.RadioButton()
-        Me.lblRemoteHost = New System.Windows.Forms.Label()
-        Me.cboPlayers = New System.Windows.Forms.ComboBox()
-        Me.lblPlayers = New System.Windows.Forms.Label()
         Me.btnRunZDoom = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.grpNetPlay.SuspendLayout()
+        Me.ofdZDoomExe = New System.Windows.Forms.OpenFileDialog()
+        Me.txtZDoomCommand = New System.Windows.Forms.TextBox()
+        Me.tbcGameSettings = New System.Windows.Forms.TabControl()
+        Me.tbpMultiplayer = New System.Windows.Forms.TabPage()
+        Me.tbpGameType = New System.Windows.Forms.TabPage()
+        Me.tbpPatchMod = New System.Windows.Forms.TabPage()
+        Me.lstPWADPkx = New System.Windows.Forms.ListBox()
+        Me.tbcGameSettings.SuspendLayout()
+        Me.tbpMultiplayer.SuspendLayout()
+        Me.tbpPatchMod.SuspendLayout()
         Me.SuspendLayout()
         '
-        'lstWads
+        'lstIWads
         '
-        Me.lstWads.FormattingEnabled = True
-        Me.lstWads.Location = New System.Drawing.Point(12, 12)
-        Me.lstWads.Name = "lstWads"
-        Me.lstWads.Size = New System.Drawing.Size(205, 199)
-        Me.lstWads.TabIndex = 0
-        Me.lstWads.TabStop = False
+        Me.lstIWads.FormattingEnabled = True
+        Me.lstIWads.Location = New System.Drawing.Point(12, 12)
+        Me.lstIWads.Name = "lstIWads"
+        Me.lstIWads.Size = New System.Drawing.Size(205, 290)
+        Me.lstIWads.TabIndex = 0
+        Me.lstIWads.TabStop = False
         '
         'btnZDoomDir
         '
@@ -62,34 +69,41 @@ Partial Class frmMain
         Me.txtPath.Location = New System.Drawing.Point(158, 322)
         Me.txtPath.Name = "txtPath"
         Me.txtPath.ReadOnly = True
-        Me.txtPath.Size = New System.Drawing.Size(218, 20)
+        Me.txtPath.Size = New System.Drawing.Size(349, 20)
         Me.txtPath.TabIndex = 2
         '
-        'fbdZDoom
+        'lblPlayers
         '
-        Me.fbdZDoom.RootFolder = System.Environment.SpecialFolder.MyComputer
-        Me.fbdZDoom.ShowNewFolderButton = False
+        Me.lblPlayers.AutoSize = True
+        Me.lblPlayers.Location = New System.Drawing.Point(124, 34)
+        Me.lblPlayers.Name = "lblPlayers"
+        Me.lblPlayers.Size = New System.Drawing.Size(51, 13)
+        Me.lblPlayers.TabIndex = 6
+        Me.lblPlayers.Text = "# Players"
         '
-        'grpNetPlay
+        'cboPlayers
         '
-        Me.grpNetPlay.Controls.Add(Me.lblPlayers)
-        Me.grpNetPlay.Controls.Add(Me.cboPlayers)
-        Me.grpNetPlay.Controls.Add(Me.lblRemoteHost)
-        Me.grpNetPlay.Controls.Add(Me.lblIPValidity)
-        Me.grpNetPlay.Controls.Add(Me.txtIPAddress)
-        Me.grpNetPlay.Controls.Add(Me.radHost)
-        Me.grpNetPlay.Controls.Add(Me.radJoin)
-        Me.grpNetPlay.Location = New System.Drawing.Point(266, 12)
-        Me.grpNetPlay.Name = "grpNetPlay"
-        Me.grpNetPlay.Size = New System.Drawing.Size(205, 162)
-        Me.grpNetPlay.TabIndex = 3
-        Me.grpNetPlay.TabStop = False
-        Me.grpNetPlay.Text = "Net Play"
+        Me.cboPlayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboPlayers.FormattingEnabled = True
+        Me.cboPlayers.Items.AddRange(New Object() {"2", "3", "4", "5", "6", "7", "8"})
+        Me.cboPlayers.Location = New System.Drawing.Point(124, 50)
+        Me.cboPlayers.Name = "cboPlayers"
+        Me.cboPlayers.Size = New System.Drawing.Size(62, 21)
+        Me.cboPlayers.TabIndex = 5
+        '
+        'lblRemoteHost
+        '
+        Me.lblRemoteHost.AutoSize = True
+        Me.lblRemoteHost.Location = New System.Drawing.Point(8, 35)
+        Me.lblRemoteHost.Name = "lblRemoteHost"
+        Me.lblRemoteHost.Size = New System.Drawing.Size(42, 13)
+        Me.lblRemoteHost.TabIndex = 4
+        Me.lblRemoteHost.Text = "Host IP"
         '
         'lblIPValidity
         '
         Me.lblIPValidity.AutoSize = True
-        Me.lblIPValidity.Location = New System.Drawing.Point(6, 89)
+        Me.lblIPValidity.Location = New System.Drawing.Point(8, 74)
         Me.lblIPValidity.Name = "lblIPValidity"
         Me.lblIPValidity.Size = New System.Drawing.Size(50, 13)
         Me.lblIPValidity.TabIndex = 3
@@ -98,7 +112,7 @@ Partial Class frmMain
         '
         'txtIPAddress
         '
-        Me.txtIPAddress.Location = New System.Drawing.Point(7, 66)
+        Me.txtIPAddress.Location = New System.Drawing.Point(9, 51)
         Me.txtIPAddress.MaxLength = 16
         Me.txtIPAddress.Name = "txtIPAddress"
         Me.txtIPAddress.Size = New System.Drawing.Size(94, 20)
@@ -107,7 +121,7 @@ Partial Class frmMain
         'radHost
         '
         Me.radHost.AutoSize = True
-        Me.radHost.Location = New System.Drawing.Point(57, 20)
+        Me.radHost.Location = New System.Drawing.Point(56, 6)
         Me.radHost.Name = "radHost"
         Me.radHost.Size = New System.Drawing.Size(47, 17)
         Me.radHost.TabIndex = 1
@@ -118,41 +132,13 @@ Partial Class frmMain
         '
         Me.radJoin.AutoSize = True
         Me.radJoin.Checked = True
-        Me.radJoin.Location = New System.Drawing.Point(7, 20)
+        Me.radJoin.Location = New System.Drawing.Point(6, 6)
         Me.radJoin.Name = "radJoin"
         Me.radJoin.Size = New System.Drawing.Size(44, 17)
         Me.radJoin.TabIndex = 0
         Me.radJoin.TabStop = True
         Me.radJoin.Text = "Join"
         Me.radJoin.UseVisualStyleBackColor = True
-        '
-        'lblRemoteHost
-        '
-        Me.lblRemoteHost.AutoSize = True
-        Me.lblRemoteHost.Location = New System.Drawing.Point(6, 50)
-        Me.lblRemoteHost.Name = "lblRemoteHost"
-        Me.lblRemoteHost.Size = New System.Drawing.Size(42, 13)
-        Me.lblRemoteHost.TabIndex = 4
-        Me.lblRemoteHost.Text = "Host IP"
-        '
-        'cboPlayers
-        '
-        Me.cboPlayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboPlayers.FormattingEnabled = True
-        Me.cboPlayers.Items.AddRange(New Object() {"2", "3", "4", "5", "6", "7", "8"})
-        Me.cboPlayers.Location = New System.Drawing.Point(122, 65)
-        Me.cboPlayers.Name = "cboPlayers"
-        Me.cboPlayers.Size = New System.Drawing.Size(62, 21)
-        Me.cboPlayers.TabIndex = 5
-        '
-        'lblPlayers
-        '
-        Me.lblPlayers.AutoSize = True
-        Me.lblPlayers.Location = New System.Drawing.Point(122, 49)
-        Me.lblPlayers.Name = "lblPlayers"
-        Me.lblPlayers.Size = New System.Drawing.Size(51, 13)
-        Me.lblPlayers.TabIndex = 6
-        Me.lblPlayers.Text = "# Players"
         '
         'btnRunZDoom
         '
@@ -171,30 +157,102 @@ Partial Class frmMain
         Me.TextBox1.Size = New System.Drawing.Size(433, 20)
         Me.TextBox1.TabIndex = 5
         '
+        'ofdZDoomExe
+        '
+        Me.ofdZDoomExe.DefaultExt = "exe"
+        Me.ofdZDoomExe.Filter = "Application (*.exe)|*.exe"
+        '
+        'txtZDoomCommand
+        '
+        Me.txtZDoomCommand.Location = New System.Drawing.Point(38, 450)
+        Me.txtZDoomCommand.Multiline = True
+        Me.txtZDoomCommand.Name = "txtZDoomCommand"
+        Me.txtZDoomCommand.Size = New System.Drawing.Size(356, 108)
+        Me.txtZDoomCommand.TabIndex = 6
+        '
+        'tbcGameSettings
+        '
+        Me.tbcGameSettings.Controls.Add(Me.tbpMultiplayer)
+        Me.tbcGameSettings.Controls.Add(Me.tbpGameType)
+        Me.tbcGameSettings.Controls.Add(Me.tbpPatchMod)
+        Me.tbcGameSettings.Location = New System.Drawing.Point(232, 12)
+        Me.tbcGameSettings.Name = "tbcGameSettings"
+        Me.tbcGameSettings.SelectedIndex = 0
+        Me.tbcGameSettings.Size = New System.Drawing.Size(375, 290)
+        Me.tbcGameSettings.TabIndex = 7
+        '
+        'tbpMultiplayer
+        '
+        Me.tbpMultiplayer.Controls.Add(Me.lblPlayers)
+        Me.tbpMultiplayer.Controls.Add(Me.radJoin)
+        Me.tbpMultiplayer.Controls.Add(Me.cboPlayers)
+        Me.tbpMultiplayer.Controls.Add(Me.radHost)
+        Me.tbpMultiplayer.Controls.Add(Me.lblRemoteHost)
+        Me.tbpMultiplayer.Controls.Add(Me.lblIPValidity)
+        Me.tbpMultiplayer.Controls.Add(Me.txtIPAddress)
+        Me.tbpMultiplayer.Location = New System.Drawing.Point(4, 22)
+        Me.tbpMultiplayer.Name = "tbpMultiplayer"
+        Me.tbpMultiplayer.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbpMultiplayer.Size = New System.Drawing.Size(367, 264)
+        Me.tbpMultiplayer.TabIndex = 0
+        Me.tbpMultiplayer.Text = "Multiplayer"
+        Me.tbpMultiplayer.UseVisualStyleBackColor = True
+        '
+        'tbpGameType
+        '
+        Me.tbpGameType.Location = New System.Drawing.Point(4, 22)
+        Me.tbpGameType.Name = "tbpGameType"
+        Me.tbpGameType.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbpGameType.Size = New System.Drawing.Size(367, 264)
+        Me.tbpGameType.TabIndex = 1
+        Me.tbpGameType.Text = "Game"
+        Me.tbpGameType.UseVisualStyleBackColor = True
+        '
+        'tbpPatchMod
+        '
+        Me.tbpPatchMod.Controls.Add(Me.lstPWADPkx)
+        Me.tbpPatchMod.Location = New System.Drawing.Point(4, 22)
+        Me.tbpPatchMod.Name = "tbpPatchMod"
+        Me.tbpPatchMod.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbpPatchMod.Size = New System.Drawing.Size(367, 264)
+        Me.tbpPatchMod.TabIndex = 2
+        Me.tbpPatchMod.Text = "Patch/Mod"
+        Me.tbpPatchMod.UseVisualStyleBackColor = True
+        '
+        'lstPWADPkx
+        '
+        Me.lstPWADPkx.FormattingEnabled = True
+        Me.lstPWADPkx.Location = New System.Drawing.Point(6, 35)
+        Me.lstPWADPkx.Name = "lstPWADPkx"
+        Me.lstPWADPkx.Size = New System.Drawing.Size(120, 199)
+        Me.lstPWADPkx.TabIndex = 0
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(850, 648)
+        Me.Controls.Add(Me.tbcGameSettings)
+        Me.Controls.Add(Me.txtZDoomCommand)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.btnRunZDoom)
-        Me.Controls.Add(Me.grpNetPlay)
         Me.Controls.Add(Me.txtPath)
         Me.Controls.Add(Me.btnZDoomDir)
-        Me.Controls.Add(Me.lstWads)
+        Me.Controls.Add(Me.lstIWads)
         Me.Name = "frmMain"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ZDoom Launcher"
-        Me.grpNetPlay.ResumeLayout(False)
-        Me.grpNetPlay.PerformLayout()
+        Me.tbcGameSettings.ResumeLayout(False)
+        Me.tbpMultiplayer.ResumeLayout(False)
+        Me.tbpMultiplayer.PerformLayout()
+        Me.tbpPatchMod.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents lstWads As System.Windows.Forms.ListBox
+    Friend WithEvents lstIWads As System.Windows.Forms.ListBox
     Friend WithEvents btnZDoomDir As System.Windows.Forms.Button
     Friend WithEvents txtPath As System.Windows.Forms.TextBox
-    Friend WithEvents fbdZDoom As System.Windows.Forms.FolderBrowserDialog
-    Friend WithEvents grpNetPlay As System.Windows.Forms.GroupBox
     Friend WithEvents txtIPAddress As System.Windows.Forms.TextBox
     Friend WithEvents radHost As System.Windows.Forms.RadioButton
     Friend WithEvents radJoin As System.Windows.Forms.RadioButton
@@ -204,5 +262,12 @@ Partial Class frmMain
     Friend WithEvents lblPlayers As System.Windows.Forms.Label
     Friend WithEvents btnRunZDoom As System.Windows.Forms.Button
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents ofdZDoomExe As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents txtZDoomCommand As System.Windows.Forms.TextBox
+    Friend WithEvents tbcGameSettings As System.Windows.Forms.TabControl
+    Friend WithEvents tbpMultiplayer As System.Windows.Forms.TabPage
+    Friend WithEvents tbpGameType As System.Windows.Forms.TabPage
+    Friend WithEvents tbpPatchMod As System.Windows.Forms.TabPage
+    Friend WithEvents lstPWADPkx As System.Windows.Forms.ListBox
 
 End Class
