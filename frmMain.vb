@@ -7,6 +7,7 @@ Imports ZDoom_Launcher.WAD.IO
 
 Public Class frmMain
     'Public RunString As String = (txtPath.Text & "\zxoom.exe")
+    Public OldListItem As String = vbNullString
 
     Private Sub btnZDoomDir_Click(sender As Object, e As EventArgs) Handles btnZDoomDir.Click
         Dim ZDoomFolder As String
@@ -31,8 +32,8 @@ Public Class frmMain
     Private Sub GetWadFiles(ByVal Folder As String)
         ' make a reference to a directory
         Dim dir As New IO.DirectoryInfo(Folder)
-        Dim WADList As IO.FileInfo() = dir.GetFiles("*.wad")
-        'Dim WADList As IO.FileInfo() = dir.GetFiles.Where(Function(fi) fi.Extension.ToLower = ".wad" OrElse fi.Extension.ToLower = ".pk3" OrElse fi.Extension.ToLower = ".pk7").ToArray
+        'Dim WADList As IO.FileInfo() = dir.GetFiles("*.wad")
+        Dim WADList As IO.FileInfo() = dir.GetFiles.Where(Function(fi) fi.Extension.ToLower = ".wad" OrElse fi.Extension.ToLower = ".pk3").ToArray
         Dim WADFile As IO.FileInfo
         Dim IsIWAD As Boolean
 
@@ -40,18 +41,19 @@ Public Class frmMain
         For Each WADFile In WADList
             If Path.GetExtension(WADFile.ToString).ToLower = ".wad" Then
 
-
                 Dim TestWADFile As New WAD.IO.WAD(Folder & "\" & WADFile.ToString)
                 IsIWAD = (TestWADFile.TestWADType = WAD.IO.WAD.IWAD)
                 If (IsIWAD = True) Then
                     lstIWads.Items.Add(WADFile)
                 Else
-                    lstPatchAvail.Items.Add(WADFile)
+                    lstPatch.Items.Add(WADFile)
                 End If
             ElseIf Path.GetExtension(WADFile.ToString).ToLower <> ".wad" Then
-                lstPatchAvail.Items.Add(WADFile)
+                lstPatch.Items.Add(WADFile)
             End If
         Next
+
+        lstIWads.Focus()
 
     End Sub
 
@@ -107,11 +109,26 @@ Public Class frmMain
     End Sub
 
     
-    Private Sub btnActivatePatch_Click(sender As Object, e As EventArgs) Handles btnActivatePatch.Click
-        ChangePatchActivation(lstPatchAvail, lstPatchActive)
+
+    Private Sub lstIWads_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstIWads.SelectedValueChanged
+        Dim WADFile As New WAD.IO.WAD(txtPath.Text & "\" & lstIWads.SelectedItem.ToString)
+        Dim count As Integer
+        Dim ListItem As String = lstIWads.SelectedItem.ToString
+
+        count = WAD.IO.WAD.LumpNames.Count
+        If ListItem <> OldListItem Then
+            'Clear the map combobox here
+            ComboBox1.Items.Clear()
+            For Each item As String In WAD.IO.WAD.LumpNames
+                ComboBox1.Items.Add(item)
+            Next item
+            'Select the first map available for the user.
+            ComboBox1.SelectedIndex = 0
+            OldListItem = lstIWads.SelectedItem.ToString
+        End If
     End Sub
 
-    Private Sub btnDeactivatePatch_Click(sender As Object, e As EventArgs) Handles btnDeactivatePatch.Click
-        ChangePatchActivation(lstPatchActive, lstPatchAvail)
+    Private Sub lstPatch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstPatch.SelectedIndexChanged
+
     End Sub
 End Class

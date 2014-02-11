@@ -22,6 +22,7 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.lstIWads = New System.Windows.Forms.ListBox()
         Me.btnZDoomDir = New System.Windows.Forms.Button()
         Me.txtPath = New System.Windows.Forms.TextBox()
@@ -39,13 +40,13 @@ Partial Class frmMain
         Me.tbcGameSettings = New System.Windows.Forms.TabControl()
         Me.tbpMultiplayer = New System.Windows.Forms.TabPage()
         Me.tbpGameType = New System.Windows.Forms.TabPage()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.cboSkillLevel = New System.Windows.Forms.ComboBox()
         Me.tbpPatchMod = New System.Windows.Forms.TabPage()
-        Me.lstPatchAvail = New System.Windows.Forms.ListBox()
-        Me.lstPatchActive = New System.Windows.Forms.ListBox()
-        Me.btnActivatePatch = New System.Windows.Forms.Button()
-        Me.btnDeactivatePatch = New System.Windows.Forms.Button()
+        Me.lstPatch = New System.Windows.Forms.CheckedListBox()
         Me.tbcGameSettings.SuspendLayout()
         Me.tbpMultiplayer.SuspendLayout()
+        Me.tbpGameType.SuspendLayout()
         Me.tbpPatchMod.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -78,6 +79,7 @@ Partial Class frmMain
         'lblPlayers
         '
         Me.lblPlayers.AutoSize = True
+        Me.lblPlayers.Enabled = False
         Me.lblPlayers.Location = New System.Drawing.Point(124, 34)
         Me.lblPlayers.Name = "lblPlayers"
         Me.lblPlayers.Size = New System.Drawing.Size(51, 13)
@@ -87,6 +89,7 @@ Partial Class frmMain
         'cboPlayers
         '
         Me.cboPlayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboPlayers.Enabled = False
         Me.cboPlayers.FormattingEnabled = True
         Me.cboPlayers.Items.AddRange(New Object() {"2", "3", "4", "5", "6", "7", "8"})
         Me.cboPlayers.Location = New System.Drawing.Point(124, 50)
@@ -97,6 +100,7 @@ Partial Class frmMain
         'lblRemoteHost
         '
         Me.lblRemoteHost.AutoSize = True
+        Me.lblRemoteHost.Enabled = False
         Me.lblRemoteHost.Location = New System.Drawing.Point(8, 35)
         Me.lblRemoteHost.Name = "lblRemoteHost"
         Me.lblRemoteHost.Size = New System.Drawing.Size(42, 13)
@@ -115,6 +119,7 @@ Partial Class frmMain
         '
         'txtIPAddress
         '
+        Me.txtIPAddress.Enabled = False
         Me.txtIPAddress.Location = New System.Drawing.Point(9, 51)
         Me.txtIPAddress.MaxLength = 16
         Me.txtIPAddress.Name = "txtIPAddress"
@@ -134,12 +139,10 @@ Partial Class frmMain
         'radJoin
         '
         Me.radJoin.AutoSize = True
-        Me.radJoin.Checked = True
         Me.radJoin.Location = New System.Drawing.Point(6, 6)
         Me.radJoin.Name = "radJoin"
         Me.radJoin.Size = New System.Drawing.Size(44, 17)
         Me.radJoin.TabIndex = 0
-        Me.radJoin.TabStop = True
         Me.radJoin.Text = "Join"
         Me.radJoin.UseVisualStyleBackColor = True
         '
@@ -203,6 +206,8 @@ Partial Class frmMain
         '
         'tbpGameType
         '
+        Me.tbpGameType.Controls.Add(Me.ComboBox1)
+        Me.tbpGameType.Controls.Add(Me.cboSkillLevel)
         Me.tbpGameType.Location = New System.Drawing.Point(4, 22)
         Me.tbpGameType.Name = "tbpGameType"
         Me.tbpGameType.Padding = New System.Windows.Forms.Padding(3)
@@ -211,12 +216,28 @@ Partial Class frmMain
         Me.tbpGameType.Text = "Game"
         Me.tbpGameType.UseVisualStyleBackColor = True
         '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(6, 39)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(121, 21)
+        Me.ComboBox1.TabIndex = 2
+        '
+        'cboSkillLevel
+        '
+        Me.cboSkillLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboSkillLevel.FormattingEnabled = True
+        Me.cboSkillLevel.Items.AddRange(New Object() {"I'm too young to die", "Hey, not too rough", "Hurt me plenty", "Ultra-violence", "NIGHTMARE!"})
+        Me.cboSkillLevel.Location = New System.Drawing.Point(6, 95)
+        Me.cboSkillLevel.Name = "cboSkillLevel"
+        Me.cboSkillLevel.Size = New System.Drawing.Size(198, 21)
+        Me.cboSkillLevel.TabIndex = 1
+        '
         'tbpPatchMod
         '
-        Me.tbpPatchMod.Controls.Add(Me.btnDeactivatePatch)
-        Me.tbpPatchMod.Controls.Add(Me.btnActivatePatch)
-        Me.tbpPatchMod.Controls.Add(Me.lstPatchActive)
-        Me.tbpPatchMod.Controls.Add(Me.lstPatchAvail)
+        Me.tbpPatchMod.Controls.Add(Me.lstPatch)
         Me.tbpPatchMod.Location = New System.Drawing.Point(4, 22)
         Me.tbpPatchMod.Name = "tbpPatchMod"
         Me.tbpPatchMod.Padding = New System.Windows.Forms.Padding(3)
@@ -225,45 +246,21 @@ Partial Class frmMain
         Me.tbpPatchMod.Text = "Patch/Mod"
         Me.tbpPatchMod.UseVisualStyleBackColor = True
         '
-        'lstPatchAvail
+        'lstPatch
         '
-        Me.lstPatchAvail.FormattingEnabled = True
-        Me.lstPatchAvail.Location = New System.Drawing.Point(38, 47)
-        Me.lstPatchAvail.Name = "lstPatchAvail"
-        Me.lstPatchAvail.Size = New System.Drawing.Size(120, 199)
-        Me.lstPatchAvail.TabIndex = 0
-        '
-        'lstPatchActive
-        '
-        Me.lstPatchActive.FormattingEnabled = True
-        Me.lstPatchActive.Location = New System.Drawing.Point(206, 47)
-        Me.lstPatchActive.Name = "lstPatchActive"
-        Me.lstPatchActive.Size = New System.Drawing.Size(120, 199)
-        Me.lstPatchActive.TabIndex = 1
-        '
-        'btnActivatePatch
-        '
-        Me.btnActivatePatch.Location = New System.Drawing.Point(164, 71)
-        Me.btnActivatePatch.Name = "btnActivatePatch"
-        Me.btnActivatePatch.Size = New System.Drawing.Size(36, 23)
-        Me.btnActivatePatch.TabIndex = 2
-        Me.btnActivatePatch.Text = ">>"
-        Me.btnActivatePatch.UseVisualStyleBackColor = True
-        '
-        'btnDeactivatePatch
-        '
-        Me.btnDeactivatePatch.Location = New System.Drawing.Point(164, 134)
-        Me.btnDeactivatePatch.Name = "btnDeactivatePatch"
-        Me.btnDeactivatePatch.Size = New System.Drawing.Size(36, 23)
-        Me.btnDeactivatePatch.TabIndex = 3
-        Me.btnDeactivatePatch.Text = "<<"
-        Me.btnDeactivatePatch.UseVisualStyleBackColor = True
+        Me.lstPatch.CheckOnClick = True
+        Me.lstPatch.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lstPatch.FormattingEnabled = True
+        Me.lstPatch.Location = New System.Drawing.Point(90, 24)
+        Me.lstPatch.Name = "lstPatch"
+        Me.lstPatch.Size = New System.Drawing.Size(181, 214)
+        Me.lstPatch.TabIndex = 0
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(850, 648)
+        Me.ClientSize = New System.Drawing.Size(621, 648)
         Me.Controls.Add(Me.tbcGameSettings)
         Me.Controls.Add(Me.txtZDoomCommand)
         Me.Controls.Add(Me.TextBox1)
@@ -271,12 +268,14 @@ Partial Class frmMain
         Me.Controls.Add(Me.txtPath)
         Me.Controls.Add(Me.btnZDoomDir)
         Me.Controls.Add(Me.lstIWads)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ZDoom Launcher"
         Me.tbcGameSettings.ResumeLayout(False)
         Me.tbpMultiplayer.ResumeLayout(False)
         Me.tbpMultiplayer.PerformLayout()
+        Me.tbpGameType.ResumeLayout(False)
         Me.tbpPatchMod.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -300,9 +299,8 @@ Partial Class frmMain
     Friend WithEvents tbpMultiplayer As System.Windows.Forms.TabPage
     Friend WithEvents tbpGameType As System.Windows.Forms.TabPage
     Friend WithEvents tbpPatchMod As System.Windows.Forms.TabPage
-    Friend WithEvents lstPatchAvail As System.Windows.Forms.ListBox
-    Friend WithEvents lstPatchActive As System.Windows.Forms.ListBox
-    Friend WithEvents btnDeactivatePatch As System.Windows.Forms.Button
-    Friend WithEvents btnActivatePatch As System.Windows.Forms.Button
+    Friend WithEvents cboSkillLevel As System.Windows.Forms.ComboBox
+    Friend WithEvents lstPatch As System.Windows.Forms.CheckedListBox
+    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
 
 End Class
