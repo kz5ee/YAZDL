@@ -271,7 +271,7 @@ Partial Class frmMain
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "ZDoom Launcher"
+        Me.Text = "YAZDL:  Yet Another ZDoom Launcher"
         Me.tbcGameSettings.ResumeLayout(False)
         Me.tbpMultiplayer.ResumeLayout(False)
         Me.tbpMultiplayer.PerformLayout()

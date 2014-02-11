@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("ZDoom Launcher")> 
+<Assembly: AssemblyTitle("YAZDL:  Yet Another ZDoom Launcher")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("KZ5EE")> 
-<Assembly: AssemblyProduct("ZDoom Launcher")> 
+<Assembly: AssemblyProduct("YAZDL")> 
 <Assembly: AssemblyCopyright("Copyright © KZ5EE 2014")> 
 <Assembly: AssemblyTrademark("")> 
 

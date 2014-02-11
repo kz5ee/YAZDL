@@ -1,6 +1,6 @@
 ﻿Imports System.Net
 Imports System.IO
-Imports ZDoom_Launcher.WAD.IO
+Imports YAZDL.WAD.IO
 
 
 
