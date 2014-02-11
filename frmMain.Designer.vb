@@ -40,7 +40,10 @@ Partial Class frmMain
         Me.tbpMultiplayer = New System.Windows.Forms.TabPage()
         Me.tbpGameType = New System.Windows.Forms.TabPage()
         Me.tbpPatchMod = New System.Windows.Forms.TabPage()
-        Me.lstPWADPkx = New System.Windows.Forms.ListBox()
+        Me.lstPatchAvail = New System.Windows.Forms.ListBox()
+        Me.lstPatchActive = New System.Windows.Forms.ListBox()
+        Me.btnActivatePatch = New System.Windows.Forms.Button()
+        Me.btnDeactivatePatch = New System.Windows.Forms.Button()
         Me.tbcGameSettings.SuspendLayout()
         Me.tbpMultiplayer.SuspendLayout()
         Me.tbpPatchMod.SuspendLayout()
@@ -210,7 +213,10 @@ Partial Class frmMain
         '
         'tbpPatchMod
         '
-        Me.tbpPatchMod.Controls.Add(Me.lstPWADPkx)
+        Me.tbpPatchMod.Controls.Add(Me.btnDeactivatePatch)
+        Me.tbpPatchMod.Controls.Add(Me.btnActivatePatch)
+        Me.tbpPatchMod.Controls.Add(Me.lstPatchActive)
+        Me.tbpPatchMod.Controls.Add(Me.lstPatchAvail)
         Me.tbpPatchMod.Location = New System.Drawing.Point(4, 22)
         Me.tbpPatchMod.Name = "tbpPatchMod"
         Me.tbpPatchMod.Padding = New System.Windows.Forms.Padding(3)
@@ -219,13 +225,39 @@ Partial Class frmMain
         Me.tbpPatchMod.Text = "Patch/Mod"
         Me.tbpPatchMod.UseVisualStyleBackColor = True
         '
-        'lstPWADPkx
+        'lstPatchAvail
         '
-        Me.lstPWADPkx.FormattingEnabled = True
-        Me.lstPWADPkx.Location = New System.Drawing.Point(6, 35)
-        Me.lstPWADPkx.Name = "lstPWADPkx"
-        Me.lstPWADPkx.Size = New System.Drawing.Size(120, 199)
-        Me.lstPWADPkx.TabIndex = 0
+        Me.lstPatchAvail.FormattingEnabled = True
+        Me.lstPatchAvail.Location = New System.Drawing.Point(38, 47)
+        Me.lstPatchAvail.Name = "lstPatchAvail"
+        Me.lstPatchAvail.Size = New System.Drawing.Size(120, 199)
+        Me.lstPatchAvail.TabIndex = 0
+        '
+        'lstPatchActive
+        '
+        Me.lstPatchActive.FormattingEnabled = True
+        Me.lstPatchActive.Location = New System.Drawing.Point(206, 47)
+        Me.lstPatchActive.Name = "lstPatchActive"
+        Me.lstPatchActive.Size = New System.Drawing.Size(120, 199)
+        Me.lstPatchActive.TabIndex = 1
+        '
+        'btnActivatePatch
+        '
+        Me.btnActivatePatch.Location = New System.Drawing.Point(164, 71)
+        Me.btnActivatePatch.Name = "btnActivatePatch"
+        Me.btnActivatePatch.Size = New System.Drawing.Size(36, 23)
+        Me.btnActivatePatch.TabIndex = 2
+        Me.btnActivatePatch.Text = ">>"
+        Me.btnActivatePatch.UseVisualStyleBackColor = True
+        '
+        'btnDeactivatePatch
+        '
+        Me.btnDeactivatePatch.Location = New System.Drawing.Point(164, 134)
+        Me.btnDeactivatePatch.Name = "btnDeactivatePatch"
+        Me.btnDeactivatePatch.Size = New System.Drawing.Size(36, 23)
+        Me.btnDeactivatePatch.TabIndex = 3
+        Me.btnDeactivatePatch.Text = "<<"
+        Me.btnDeactivatePatch.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -268,6 +300,9 @@ Partial Class frmMain
     Friend WithEvents tbpMultiplayer As System.Windows.Forms.TabPage
     Friend WithEvents tbpGameType As System.Windows.Forms.TabPage
     Friend WithEvents tbpPatchMod As System.Windows.Forms.TabPage
-    Friend WithEvents lstPWADPkx As System.Windows.Forms.ListBox
+    Friend WithEvents lstPatchAvail As System.Windows.Forms.ListBox
+    Friend WithEvents lstPatchActive As System.Windows.Forms.ListBox
+    Friend WithEvents btnDeactivatePatch As System.Windows.Forms.Button
+    Friend WithEvents btnActivatePatch As System.Windows.Forms.Button
 
 End Class

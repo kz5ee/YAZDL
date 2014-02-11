@@ -46,10 +46,10 @@ Public Class frmMain
                 If (IsIWAD = True) Then
                     lstIWads.Items.Add(WADFile)
                 Else
-                    lstPWADPkx.Items.Add(WADFile)
+                    lstPatchAvail.Items.Add(WADFile)
                 End If
             ElseIf Path.GetExtension(WADFile.ToString).ToLower <> ".wad" Then
-                lstPWADPkx.Items.Add(WADFile)
+                lstPatchAvail.Items.Add(WADFile)
             End If
         Next
 
@@ -93,5 +93,25 @@ Public Class frmMain
         Process.Start(txtZDoomCommand.Text)
     End Sub
 
+    Private Sub ChangePatchActivation(src As ListBox, dst As ListBox)
+        Dim sItems As ListBox.SelectedObjectCollection = src.SelectedItems
 
+        For Each item As FileInfo In sItems
+            dst.Items.Add(item)
+        Next
+
+        While src.SelectedItems.Count > 0
+            src.Items.Remove(src.SelectedItems(0))
+        End While
+
+    End Sub
+
+    
+    Private Sub btnActivatePatch_Click(sender As Object, e As EventArgs) Handles btnActivatePatch.Click
+        ChangePatchActivation(lstPatchAvail, lstPatchActive)
+    End Sub
+
+    Private Sub btnDeactivatePatch_Click(sender As Object, e As EventArgs) Handles btnDeactivatePatch.Click
+        ChangePatchActivation(lstPatchActive, lstPatchAvail)
+    End Sub
 End Class

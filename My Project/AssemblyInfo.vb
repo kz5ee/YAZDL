@@ -10,9 +10,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("ZDoom Launcher")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Hewlett-Packard")> 
+<Assembly: AssemblyCompany("KZ5EE")> 
 <Assembly: AssemblyProduct("ZDoom Launcher")> 
-<Assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2014")> 
+<Assembly: AssemblyCopyright("Copyright © KZ5EE 2014")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
