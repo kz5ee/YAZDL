@@ -46,19 +46,36 @@ Partial Class frmMain
         Me.cboSkillLevel = New System.Windows.Forms.ComboBox()
         Me.tbpPatchMod = New System.Windows.Forms.TabPage()
         Me.lstPatch = New System.Windows.Forms.CheckedListBox()
-        Me.btnBuildCmd = New System.Windows.Forms.Button()
-        Me.chkCheatsEn = New System.Windows.Forms.CheckBox()
         Me.tbpGamePlay = New System.Windows.Forms.TabPage()
-        Me.chkNoMonsters = New System.Windows.Forms.CheckBox()
-        Me.chkFastMonsters = New System.Windows.Forms.CheckBox()
-        Me.chkMonsterRespawn = New System.Windows.Forms.CheckBox()
-        Me.chkDblAmmo = New System.Windows.Forms.CheckBox()
+        Me.chkKillSpawn = New System.Windows.Forms.CheckBox()
         Me.chkInfAmmo = New System.Windows.Forms.CheckBox()
+        Me.chkDblAmmo = New System.Windows.Forms.CheckBox()
+        Me.chkMonsterRespawn = New System.Windows.Forms.CheckBox()
+        Me.chkFastMonsters = New System.Windows.Forms.CheckBox()
+        Me.chkNoMonsters = New System.Windows.Forms.CheckBox()
+        Me.chkCheatsEn = New System.Windows.Forms.CheckBox()
+        Me.tpgDeathmatch = New System.Windows.Forms.TabPage()
+        Me.tpgCoOp = New System.Windows.Forms.TabPage()
+        Me.btnBuildCmd = New System.Windows.Forms.Button()
+        Me.chkWeaponsStay = New System.Windows.Forms.CheckBox()
+        Me.chkAllowPwrUps = New System.Windows.Forms.CheckBox()
+        Me.chkHealthSpawn = New System.Windows.Forms.CheckBox()
+        Me.chkArmorSpawn = New System.Windows.Forms.CheckBox()
+        Me.chkSpawnFarthest = New System.Windows.Forms.CheckBox()
+        Me.chkSameMap = New System.Windows.Forms.CheckBox()
+        Me.chkAllowExit = New System.Windows.Forms.CheckBox()
+        Me.chkLoseFrag = New System.Windows.Forms.CheckBox()
+        Me.chkRespawnProtection = New System.Windows.Forms.CheckBox()
+        Me.chkKeepFragsGained = New System.Windows.Forms.CheckBox()
+        Me.chkTeamSwitching = New System.Windows.Forms.CheckBox()
+        Me.chkForceRespawn = New System.Windows.Forms.CheckBox()
+        Me.lblMyIpAddress = New System.Windows.Forms.Label()
         Me.tbcGameSettings.SuspendLayout()
         Me.tbpMultiplayer.SuspendLayout()
         Me.tbpGameType.SuspendLayout()
         Me.tbpPatchMod.SuspendLayout()
         Me.tbpGamePlay.SuspendLayout()
+        Me.tpgDeathmatch.SuspendLayout()
         Me.SuspendLayout()
         '
         'lstIWads
@@ -186,6 +203,8 @@ Partial Class frmMain
         Me.tbcGameSettings.Controls.Add(Me.tbpGameType)
         Me.tbcGameSettings.Controls.Add(Me.tbpPatchMod)
         Me.tbcGameSettings.Controls.Add(Me.tbpGamePlay)
+        Me.tbcGameSettings.Controls.Add(Me.tpgDeathmatch)
+        Me.tbcGameSettings.Controls.Add(Me.tpgCoOp)
         Me.tbcGameSettings.Location = New System.Drawing.Point(232, 12)
         Me.tbcGameSettings.Name = "tbcGameSettings"
         Me.tbcGameSettings.SelectedIndex = 0
@@ -269,7 +288,6 @@ Partial Class frmMain
         '
         Me.cboSkillLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboSkillLevel.FormattingEnabled = True
-        Me.cboSkillLevel.Items.AddRange(New Object() {"I'm too young to die", "Hey, not too rough", "Hurt me plenty", "Ultra-violence", "NIGHTMARE!"})
         Me.cboSkillLevel.Location = New System.Drawing.Point(6, 148)
         Me.cboSkillLevel.Name = "cboSkillLevel"
         Me.cboSkillLevel.Size = New System.Drawing.Size(198, 21)
@@ -296,27 +314,10 @@ Partial Class frmMain
         Me.lstPatch.Size = New System.Drawing.Size(181, 214)
         Me.lstPatch.TabIndex = 0
         '
-        'btnBuildCmd
-        '
-        Me.btnBuildCmd.Location = New System.Drawing.Point(39, 428)
-        Me.btnBuildCmd.Name = "btnBuildCmd"
-        Me.btnBuildCmd.Size = New System.Drawing.Size(95, 23)
-        Me.btnBuildCmd.TabIndex = 8
-        Me.btnBuildCmd.Text = "Build Run Args"
-        Me.btnBuildCmd.UseVisualStyleBackColor = True
-        '
-        'chkCheatsEn
-        '
-        Me.chkCheatsEn.AutoSize = True
-        Me.chkCheatsEn.Location = New System.Drawing.Point(6, 6)
-        Me.chkCheatsEn.Name = "chkCheatsEn"
-        Me.chkCheatsEn.Size = New System.Drawing.Size(95, 17)
-        Me.chkCheatsEn.TabIndex = 9
-        Me.chkCheatsEn.Text = "Enable Cheats"
-        Me.chkCheatsEn.UseVisualStyleBackColor = True
-        '
         'tbpGamePlay
         '
+        Me.tbpGamePlay.Controls.Add(Me.chkForceRespawn)
+        Me.tbpGamePlay.Controls.Add(Me.chkKillSpawn)
         Me.tbpGamePlay.Controls.Add(Me.chkInfAmmo)
         Me.tbpGamePlay.Controls.Add(Me.chkDblAmmo)
         Me.tbpGamePlay.Controls.Add(Me.chkMonsterRespawn)
@@ -331,55 +332,243 @@ Partial Class frmMain
         Me.tbpGamePlay.Text = "Gameplay"
         Me.tbpGamePlay.UseVisualStyleBackColor = True
         '
-        'chkNoMonsters
+        'chkKillSpawn
         '
-        Me.chkNoMonsters.AutoSize = True
-        Me.chkNoMonsters.Location = New System.Drawing.Point(6, 29)
-        Me.chkNoMonsters.Name = "chkNoMonsters"
-        Me.chkNoMonsters.Size = New System.Drawing.Size(86, 17)
-        Me.chkNoMonsters.TabIndex = 10
-        Me.chkNoMonsters.Text = "No Monsters"
-        Me.chkNoMonsters.UseVisualStyleBackColor = True
+        Me.chkKillSpawn.AutoSize = True
+        Me.chkKillSpawn.Location = New System.Drawing.Point(3, 145)
+        Me.chkKillSpawn.Name = "chkKillSpawn"
+        Me.chkKillSpawn.Size = New System.Drawing.Size(120, 17)
+        Me.chkKillSpawn.TabIndex = 14
+        Me.chkKillSpawn.Text = "Romero Kill Children"
+        Me.chkKillSpawn.UseVisualStyleBackColor = True
         '
-        'chkFastMonsters
+        'chkInfAmmo
         '
-        Me.chkFastMonsters.AutoSize = True
-        Me.chkFastMonsters.Location = New System.Drawing.Point(6, 52)
-        Me.chkFastMonsters.Name = "chkFastMonsters"
-        Me.chkFastMonsters.Size = New System.Drawing.Size(92, 17)
-        Me.chkFastMonsters.TabIndex = 10
-        Me.chkFastMonsters.Text = "Fast Monsters"
-        Me.chkFastMonsters.UseVisualStyleBackColor = True
-        '
-        'chkMonsterRespawn
-        '
-        Me.chkMonsterRespawn.AutoSize = True
-        Me.chkMonsterRespawn.Location = New System.Drawing.Point(6, 75)
-        Me.chkMonsterRespawn.Name = "chkMonsterRespawn"
-        Me.chkMonsterRespawn.Size = New System.Drawing.Size(117, 17)
-        Me.chkMonsterRespawn.TabIndex = 11
-        Me.chkMonsterRespawn.Text = "Respawn Monsters"
-        Me.chkMonsterRespawn.UseVisualStyleBackColor = True
+        Me.chkInfAmmo.AutoSize = True
+        Me.chkInfAmmo.Location = New System.Drawing.Point(3, 121)
+        Me.chkInfAmmo.Name = "chkInfAmmo"
+        Me.chkInfAmmo.Size = New System.Drawing.Size(89, 17)
+        Me.chkInfAmmo.TabIndex = 13
+        Me.chkInfAmmo.Text = "Infinite Ammo"
+        Me.chkInfAmmo.UseVisualStyleBackColor = True
         '
         'chkDblAmmo
         '
         Me.chkDblAmmo.AutoSize = True
-        Me.chkDblAmmo.Location = New System.Drawing.Point(6, 98)
+        Me.chkDblAmmo.Location = New System.Drawing.Point(3, 98)
         Me.chkDblAmmo.Name = "chkDblAmmo"
         Me.chkDblAmmo.Size = New System.Drawing.Size(92, 17)
         Me.chkDblAmmo.TabIndex = 12
         Me.chkDblAmmo.Text = "Double Ammo"
         Me.chkDblAmmo.UseVisualStyleBackColor = True
         '
-        'chkInfAmmo
+        'chkMonsterRespawn
         '
-        Me.chkInfAmmo.AutoSize = True
-        Me.chkInfAmmo.Location = New System.Drawing.Point(6, 121)
-        Me.chkInfAmmo.Name = "chkInfAmmo"
-        Me.chkInfAmmo.Size = New System.Drawing.Size(89, 17)
-        Me.chkInfAmmo.TabIndex = 13
-        Me.chkInfAmmo.Text = "Infinite Ammo"
-        Me.chkInfAmmo.UseVisualStyleBackColor = True
+        Me.chkMonsterRespawn.AutoSize = True
+        Me.chkMonsterRespawn.Location = New System.Drawing.Point(3, 75)
+        Me.chkMonsterRespawn.Name = "chkMonsterRespawn"
+        Me.chkMonsterRespawn.Size = New System.Drawing.Size(117, 17)
+        Me.chkMonsterRespawn.TabIndex = 11
+        Me.chkMonsterRespawn.Text = "Respawn Monsters"
+        Me.chkMonsterRespawn.UseVisualStyleBackColor = True
+        '
+        'chkFastMonsters
+        '
+        Me.chkFastMonsters.AutoSize = True
+        Me.chkFastMonsters.Location = New System.Drawing.Point(3, 52)
+        Me.chkFastMonsters.Name = "chkFastMonsters"
+        Me.chkFastMonsters.Size = New System.Drawing.Size(92, 17)
+        Me.chkFastMonsters.TabIndex = 10
+        Me.chkFastMonsters.Text = "Fast Monsters"
+        Me.chkFastMonsters.UseVisualStyleBackColor = True
+        '
+        'chkNoMonsters
+        '
+        Me.chkNoMonsters.AutoSize = True
+        Me.chkNoMonsters.Location = New System.Drawing.Point(3, 29)
+        Me.chkNoMonsters.Name = "chkNoMonsters"
+        Me.chkNoMonsters.Size = New System.Drawing.Size(86, 17)
+        Me.chkNoMonsters.TabIndex = 10
+        Me.chkNoMonsters.Text = "No Monsters"
+        Me.chkNoMonsters.UseVisualStyleBackColor = True
+        '
+        'chkCheatsEn
+        '
+        Me.chkCheatsEn.AutoSize = True
+        Me.chkCheatsEn.Location = New System.Drawing.Point(3, 6)
+        Me.chkCheatsEn.Name = "chkCheatsEn"
+        Me.chkCheatsEn.Size = New System.Drawing.Size(95, 17)
+        Me.chkCheatsEn.TabIndex = 9
+        Me.chkCheatsEn.Text = "Enable Cheats"
+        Me.chkCheatsEn.UseVisualStyleBackColor = True
+        '
+        'tpgDeathmatch
+        '
+        Me.tpgDeathmatch.Controls.Add(Me.chkTeamSwitching)
+        Me.tpgDeathmatch.Controls.Add(Me.chkKeepFragsGained)
+        Me.tpgDeathmatch.Controls.Add(Me.chkRespawnProtection)
+        Me.tpgDeathmatch.Controls.Add(Me.chkLoseFrag)
+        Me.tpgDeathmatch.Controls.Add(Me.chkAllowExit)
+        Me.tpgDeathmatch.Controls.Add(Me.chkSameMap)
+        Me.tpgDeathmatch.Controls.Add(Me.chkSpawnFarthest)
+        Me.tpgDeathmatch.Controls.Add(Me.chkArmorSpawn)
+        Me.tpgDeathmatch.Controls.Add(Me.chkHealthSpawn)
+        Me.tpgDeathmatch.Controls.Add(Me.chkAllowPwrUps)
+        Me.tpgDeathmatch.Controls.Add(Me.chkWeaponsStay)
+        Me.tpgDeathmatch.Location = New System.Drawing.Point(4, 22)
+        Me.tpgDeathmatch.Name = "tpgDeathmatch"
+        Me.tpgDeathmatch.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpgDeathmatch.Size = New System.Drawing.Size(367, 264)
+        Me.tpgDeathmatch.TabIndex = 4
+        Me.tpgDeathmatch.Text = "Deathmatch"
+        Me.tpgDeathmatch.UseVisualStyleBackColor = True
+        '
+        'tpgCoOp
+        '
+        Me.tpgCoOp.Location = New System.Drawing.Point(4, 22)
+        Me.tpgCoOp.Name = "tpgCoOp"
+        Me.tpgCoOp.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpgCoOp.Size = New System.Drawing.Size(367, 264)
+        Me.tpgCoOp.TabIndex = 5
+        Me.tpgCoOp.Text = "Co-Op"
+        Me.tpgCoOp.UseVisualStyleBackColor = True
+        '
+        'btnBuildCmd
+        '
+        Me.btnBuildCmd.Location = New System.Drawing.Point(39, 428)
+        Me.btnBuildCmd.Name = "btnBuildCmd"
+        Me.btnBuildCmd.Size = New System.Drawing.Size(95, 23)
+        Me.btnBuildCmd.TabIndex = 8
+        Me.btnBuildCmd.Text = "Build Run Args"
+        Me.btnBuildCmd.UseVisualStyleBackColor = True
+        '
+        'chkWeaponsStay
+        '
+        Me.chkWeaponsStay.AutoSize = True
+        Me.chkWeaponsStay.Location = New System.Drawing.Point(6, 6)
+        Me.chkWeaponsStay.Name = "chkWeaponsStay"
+        Me.chkWeaponsStay.Size = New System.Drawing.Size(96, 17)
+        Me.chkWeaponsStay.TabIndex = 10
+        Me.chkWeaponsStay.Text = "Weapons Stay"
+        Me.chkWeaponsStay.UseVisualStyleBackColor = True
+        '
+        'chkAllowPwrUps
+        '
+        Me.chkAllowPwrUps.AutoSize = True
+        Me.chkAllowPwrUps.Location = New System.Drawing.Point(6, 29)
+        Me.chkAllowPwrUps.Name = "chkAllowPwrUps"
+        Me.chkAllowPwrUps.Size = New System.Drawing.Size(111, 17)
+        Me.chkAllowPwrUps.TabIndex = 11
+        Me.chkAllowPwrUps.Text = "Disable Powerups"
+        Me.chkAllowPwrUps.UseVisualStyleBackColor = True
+        '
+        'chkHealthSpawn
+        '
+        Me.chkHealthSpawn.AutoSize = True
+        Me.chkHealthSpawn.Location = New System.Drawing.Point(6, 52)
+        Me.chkHealthSpawn.Name = "chkHealthSpawn"
+        Me.chkHealthSpawn.Size = New System.Drawing.Size(131, 17)
+        Me.chkHealthSpawn.TabIndex = 12
+        Me.chkHealthSpawn.Text = "Disable Health Spawn"
+        Me.chkHealthSpawn.UseVisualStyleBackColor = True
+        '
+        'chkArmorSpawn
+        '
+        Me.chkArmorSpawn.AutoSize = True
+        Me.chkArmorSpawn.Location = New System.Drawing.Point(6, 75)
+        Me.chkArmorSpawn.Name = "chkArmorSpawn"
+        Me.chkArmorSpawn.Size = New System.Drawing.Size(127, 17)
+        Me.chkArmorSpawn.TabIndex = 13
+        Me.chkArmorSpawn.Text = "Disable Armor Spawn"
+        Me.chkArmorSpawn.UseVisualStyleBackColor = True
+        '
+        'chkSpawnFarthest
+        '
+        Me.chkSpawnFarthest.AutoSize = True
+        Me.chkSpawnFarthest.Location = New System.Drawing.Point(6, 98)
+        Me.chkSpawnFarthest.Name = "chkSpawnFarthest"
+        Me.chkSpawnFarthest.Size = New System.Drawing.Size(100, 17)
+        Me.chkSpawnFarthest.TabIndex = 14
+        Me.chkSpawnFarthest.Text = "Spawn Farthest"
+        Me.chkSpawnFarthest.UseVisualStyleBackColor = True
+        '
+        'chkSameMap
+        '
+        Me.chkSameMap.AutoSize = True
+        Me.chkSameMap.Location = New System.Drawing.Point(6, 121)
+        Me.chkSameMap.Name = "chkSameMap"
+        Me.chkSameMap.Size = New System.Drawing.Size(77, 17)
+        Me.chkSameMap.TabIndex = 15
+        Me.chkSameMap.Text = "Same Map"
+        Me.chkSameMap.UseVisualStyleBackColor = True
+        '
+        'chkAllowExit
+        '
+        Me.chkAllowExit.AutoSize = True
+        Me.chkAllowExit.Location = New System.Drawing.Point(6, 144)
+        Me.chkAllowExit.Name = "chkAllowExit"
+        Me.chkAllowExit.Size = New System.Drawing.Size(81, 17)
+        Me.chkAllowExit.TabIndex = 17
+        Me.chkAllowExit.Text = "Disable Exit"
+        Me.chkAllowExit.UseVisualStyleBackColor = True
+        '
+        'chkLoseFrag
+        '
+        Me.chkLoseFrag.AutoSize = True
+        Me.chkLoseFrag.Location = New System.Drawing.Point(6, 190)
+        Me.chkLoseFrag.Name = "chkLoseFrag"
+        Me.chkLoseFrag.Size = New System.Drawing.Size(123, 17)
+        Me.chkLoseFrag.TabIndex = 10
+        Me.chkLoseFrag.Text = "Lose Frag if Fragged"
+        Me.chkLoseFrag.UseVisualStyleBackColor = True
+        '
+        'chkRespawnProtection
+        '
+        Me.chkRespawnProtection.AutoSize = True
+        Me.chkRespawnProtection.Location = New System.Drawing.Point(6, 167)
+        Me.chkRespawnProtection.Name = "chkRespawnProtection"
+        Me.chkRespawnProtection.Size = New System.Drawing.Size(122, 17)
+        Me.chkRespawnProtection.TabIndex = 18
+        Me.chkRespawnProtection.Text = "Respawn Protection"
+        Me.chkRespawnProtection.UseVisualStyleBackColor = True
+        '
+        'chkKeepFragsGained
+        '
+        Me.chkKeepFragsGained.AutoSize = True
+        Me.chkKeepFragsGained.Location = New System.Drawing.Point(6, 213)
+        Me.chkKeepFragsGained.Name = "chkKeepFragsGained"
+        Me.chkKeepFragsGained.Size = New System.Drawing.Size(117, 17)
+        Me.chkKeepFragsGained.TabIndex = 19
+        Me.chkKeepFragsGained.Text = "Keep Frags Gained"
+        Me.chkKeepFragsGained.UseVisualStyleBackColor = True
+        '
+        'chkTeamSwitching
+        '
+        Me.chkTeamSwitching.AutoSize = True
+        Me.chkTeamSwitching.Location = New System.Drawing.Point(6, 236)
+        Me.chkTeamSwitching.Name = "chkTeamSwitching"
+        Me.chkTeamSwitching.Size = New System.Drawing.Size(119, 17)
+        Me.chkTeamSwitching.TabIndex = 20
+        Me.chkTeamSwitching.Text = "No Team Switching"
+        Me.chkTeamSwitching.UseVisualStyleBackColor = True
+        '
+        'chkForceRespawn
+        '
+        Me.chkForceRespawn.AutoSize = True
+        Me.chkForceRespawn.Location = New System.Drawing.Point(3, 168)
+        Me.chkForceRespawn.Name = "chkForceRespawn"
+        Me.chkForceRespawn.Size = New System.Drawing.Size(101, 17)
+        Me.chkForceRespawn.TabIndex = 17
+        Me.chkForceRespawn.Text = "Force Respawn"
+        Me.chkForceRespawn.UseVisualStyleBackColor = True
+        '
+        'lblMyIpAddress
+        '
+        Me.lblMyIpAddress.AutoSize = True
+        Me.lblMyIpAddress.Location = New System.Drawing.Point(106, 508)
+        Me.lblMyIpAddress.Name = "lblMyIpAddress"
+        Me.lblMyIpAddress.Size = New System.Drawing.Size(0, 13)
+        Me.lblMyIpAddress.TabIndex = 9
         '
         'frmMain
         '
@@ -387,6 +576,7 @@ Partial Class frmMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(621, 648)
+        Me.Controls.Add(Me.lblMyIpAddress)
         Me.Controls.Add(Me.btnBuildCmd)
         Me.Controls.Add(Me.tbcGameSettings)
         Me.Controls.Add(Me.txtZDArgs)
@@ -406,6 +596,8 @@ Partial Class frmMain
         Me.tbpPatchMod.ResumeLayout(False)
         Me.tbpGamePlay.ResumeLayout(False)
         Me.tbpGamePlay.PerformLayout()
+        Me.tpgDeathmatch.ResumeLayout(False)
+        Me.tpgDeathmatch.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -441,5 +633,21 @@ Partial Class frmMain
     Friend WithEvents chkMonsterRespawn As System.Windows.Forms.CheckBox
     Friend WithEvents chkFastMonsters As System.Windows.Forms.CheckBox
     Friend WithEvents chkNoMonsters As System.Windows.Forms.CheckBox
+    Friend WithEvents chkKillSpawn As System.Windows.Forms.CheckBox
+    Friend WithEvents tpgDeathmatch As System.Windows.Forms.TabPage
+    Friend WithEvents tpgCoOp As System.Windows.Forms.TabPage
+    Friend WithEvents chkForceRespawn As System.Windows.Forms.CheckBox
+    Friend WithEvents chkTeamSwitching As System.Windows.Forms.CheckBox
+    Friend WithEvents chkKeepFragsGained As System.Windows.Forms.CheckBox
+    Friend WithEvents chkRespawnProtection As System.Windows.Forms.CheckBox
+    Friend WithEvents chkLoseFrag As System.Windows.Forms.CheckBox
+    Friend WithEvents chkAllowExit As System.Windows.Forms.CheckBox
+    Friend WithEvents chkSameMap As System.Windows.Forms.CheckBox
+    Friend WithEvents chkSpawnFarthest As System.Windows.Forms.CheckBox
+    Friend WithEvents chkArmorSpawn As System.Windows.Forms.CheckBox
+    Friend WithEvents chkHealthSpawn As System.Windows.Forms.CheckBox
+    Friend WithEvents chkAllowPwrUps As System.Windows.Forms.CheckBox
+    Friend WithEvents chkWeaponsStay As System.Windows.Forms.CheckBox
+    Friend WithEvents lblMyIpAddress As System.Windows.Forms.Label
 
 End Class

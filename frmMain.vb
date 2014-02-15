@@ -3,17 +3,12 @@ Imports System.IO
 Imports System.Text
 Imports YAZDL.WAD.IO
 
-
-
-
 Public Class frmMain
-    'Public RunString As String = (txtPath.Text & "\zxoom.exe")
     Public OldListItem As String = vbNullString
-    Public PopulatedFlag As Boolean
-    Public ZDExecute As String = vbNullString
     Public ZDExeFile As String = String.Empty
     Public FileArgs As List(Of String)
 
+    Private DeathMatchControls As New List(Of Control)
 
     Private Sub btnZDoomDir_Click(sender As Object, e As EventArgs) Handles btnZDoomDir.Click
         Dim ZDoomFolder As String
@@ -25,14 +20,32 @@ Public Class frmMain
             txtPath.Text = ZDoomFolder
         End If
 
-
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If My.Settings.ZDoomDirectory <> "" Then
-            txtPath.Text = My.Settings.ZDoomDirectory
+
+        If My.Settings.ZDoomExecutable <> "" Then
+            ZDExeFile = My.Settings.ZDoomExecutable
+            txtPath.Text = Path.GetDirectoryName(ZDExeFile)
             GetWadFiles(txtPath.Text)
+            SkillLvlPopulate()
         End If
+
+        DeathMatchControls.Add(Me.chkAllowExit)
+        DeathMatchControls.Add(Me.chkAllowPwrUps)
+        DeathMatchControls.Add(Me.chkArmorSpawn)
+        DeathMatchControls.Add(Me.chkHealthSpawn)
+        DeathMatchControls.Add(Me.chkWeaponsStay)
+        DeathMatchControls.Add(Me.chkSameMap)
+        DeathMatchControls.Add(Me.chkSpawnFarthest)
+        DeathMatchControls.Add(Me.chkLoseFrag)
+        DeathMatchControls.Add(Me.chkKeepFragsGained)
+        DeathMatchControls.Add(Me.chkRespawnProtection)
+        DeathMatchControls.Add(Me.chkTeamSwitching)
+
+        For Each Control As Control In DeathMatchControls
+            Control.Enabled = False
+        Next
 
     End Sub
 
@@ -177,6 +190,8 @@ Public Class frmMain
         Dim Patch2Load As String = String.Empty
         Dim DblAmmo As String = String.Empty
         Dim InfAmmo As String = String.Empty
+        Dim RomeroDeath As String = String.Empty
+        Dim SkillLevel As String = String.Empty
 
         If lstIWads.SelectedIndex = -1 Then
         Else
@@ -215,17 +230,65 @@ Public Class frmMain
         If chkInfAmmo.Checked = True Then
             InfAmmo = " +set sv_infiniteammo 1"
         End If
+        If chkKillSpawn.Checked = True Then
+            RomeroDeath = " +set sv_killbossmonst 1"
+        End If
+        If cboMap.Text <> "" Then
+            Map = (" +map " & cboMap.Text)
+        End If
+        If cboMap.Text <> "" Then
+            SkillLevel = (" -skill " & cboSkillLevel.SelectedIndex + 1)
+        End If
         If (lstPatch.CheckedIndices.Count > 0) Then
             CmdArgs.Append(IWADFile & NetSettings & Deathmatch & NoMonsters & Respawn & _
-                           FastMonsters & (" -file " & BuildPatchList(lstPatch)) & CheatsEn & DblAmmo & InfAmmo)
+                           FastMonsters & (" -file " & BuildPatchList(lstPatch)) & Map & SkillLevel & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
         Else
-            CmdArgs.Append(IWADFile & NetSettings & Deathmatch & NoMonsters & Respawn & FastMonsters & CheatsEn & DblAmmo & InfAmmo)
+            CmdArgs.Append(IWADFile & NetSettings & Deathmatch & NoMonsters & Respawn & FastMonsters & Map & SkillLevel & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
         End If
-
-
 
         Return CmdArgs.ToString().TrimEnd()
     End Function
 
+    Private Sub SkillLvlPopulate()
+        cboSkillLevel.Items.Clear()
+        If chkBrutalDoom.Checked = True Then
+            cboSkillLevel.Items.Add("Power Fantasy")
+            cboSkillLevel.Items.Add("Wussy")
+            cboSkillLevel.Items.Add("Harsh")
+            cboSkillLevel.Items.Add("Full Ultra Violence")
+            cboSkillLevel.Items.Add("I Am Super Bad")
+            cboSkillLevel.Items.Add("12 in a 10 Point Scale of Bad")
+            cboSkillLevel.Items.Add("Black Metal")
+        Else
+            cboSkillLevel.Items.Add("I'm too Young to Die")
+            cboSkillLevel.Items.Add("Hey, Not too Rough")
+            cboSkillLevel.Items.Add("Hurt Me Plenty")
+            cboSkillLevel.Items.Add("Ultra-Violence")
+            cboSkillLevel.Items.Add("NIGHTMARE!")
+        End If
+    End Sub
 
+    Private Sub frmMain_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If ZDExeFile <> My.Settings.ZDoomExecutable Then
+            If (MessageBox.Show("Remember ZDoom Folders?", "Save Settings?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes) Then
+                My.Settings.ZDoomExecutable = ZDExeFile
+            Else
+                End
+            End If
+        End If
+    End Sub
+
+    Private Sub chkBrutalDoom_CheckedChanged(sender As Object, e As EventArgs) Handles chkBrutalDoom.CheckedChanged
+        SkillLvlPopulate()
+    End Sub
+
+    Private Sub chkDeathMatch_CheckedChanged(sender As Object, e As EventArgs) Handles chkDeathMatch.CheckedChanged
+        For Each Control As Control In DeathMatchControls
+            If chkDeathMatch.Checked = True Then
+                Control.Enabled = True
+            Else
+                Control.Enabled = False
+            End If
+        Next
+    End Sub
 End Class

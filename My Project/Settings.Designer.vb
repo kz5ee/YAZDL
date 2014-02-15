@@ -57,12 +57,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ZDoomDirectory() As String
+        Public Property ZDoomExecutable() As String
             Get
-                Return CType(Me("ZDoomDirectory"),String)
+                Return CType(Me("ZDoomExecutable"),String)
             End Get
             Set
-                Me("ZDoomDirectory") = value
+                Me("ZDoomExecutable") = value
             End Set
         End Property
         
