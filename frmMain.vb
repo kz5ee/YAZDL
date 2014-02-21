@@ -243,6 +243,26 @@ Public Class frmMain
         Return CmdArgs.ToString().TrimEnd()
     End Function
 
+    Private Function BuildMPString()
+
+    End Function
+
+    Private Function BuildGamePlayString()
+
+    End Function
+
+    Private Function BuildPatchListString()
+
+    End Function
+
+    Private Function BuildDMString()
+
+    End Function
+
+    Private Function BuildCoOpString()
+
+    End Function
+
     Private Sub SkillLvlPopulate()
         cboSkillLevel.Items.Clear()
         If chkBrutalDoom.Checked = True Then
@@ -279,6 +299,4 @@ Public Class frmMain
     Private Sub tmrBuildCmd_Tick(sender As Object, e As EventArgs) Handles tmrBuildCmd.Tick
         txtZDArgs.Text = BuildCmd().ToString
     End Sub
-
-
 End Class

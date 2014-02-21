@@ -239,7 +239,7 @@ Partial Class frmMain
         Me.tbpMultiplayer.Location = New System.Drawing.Point(4, 22)
         Me.tbpMultiplayer.Name = "tbpMultiplayer"
         Me.tbpMultiplayer.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbpMultiplayer.Size = New System.Drawing.Size(300, 264)
+        Me.tbpMultiplayer.Size = New System.Drawing.Size(349, 264)
         Me.tbpMultiplayer.TabIndex = 0
         Me.tbpMultiplayer.Text = "Multiplayer"
         Me.tbpMultiplayer.UseVisualStyleBackColor = True
@@ -255,6 +255,7 @@ Partial Class frmMain
         'chkDeathMatch
         '
         Me.chkDeathMatch.AutoSize = True
+        Me.chkDeathMatch.Enabled = False
         Me.chkDeathMatch.Location = New System.Drawing.Point(7, 102)
         Me.chkDeathMatch.Name = "chkDeathMatch"
         Me.chkDeathMatch.Size = New System.Drawing.Size(84, 17)
@@ -282,7 +283,7 @@ Partial Class frmMain
         Me.tbpGameType.Location = New System.Drawing.Point(4, 22)
         Me.tbpGameType.Name = "tbpGameType"
         Me.tbpGameType.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbpGameType.Size = New System.Drawing.Size(300, 264)
+        Me.tbpGameType.Size = New System.Drawing.Size(349, 264)
         Me.tbpGameType.TabIndex = 1
         Me.tbpGameType.Text = "Game"
         Me.tbpGameType.UseVisualStyleBackColor = True
@@ -349,7 +350,7 @@ Partial Class frmMain
         Me.tbpGamePlay.Location = New System.Drawing.Point(4, 22)
         Me.tbpGamePlay.Name = "tbpGamePlay"
         Me.tbpGamePlay.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbpGamePlay.Size = New System.Drawing.Size(300, 264)
+        Me.tbpGamePlay.Size = New System.Drawing.Size(349, 264)
         Me.tbpGamePlay.TabIndex = 3
         Me.tbpGamePlay.Text = "Gameplay"
         Me.tbpGamePlay.UseVisualStyleBackColor = True
