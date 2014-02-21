@@ -31,21 +31,7 @@ Public Class frmMain
             SkillLvlPopulate()
         End If
 
-        DeathMatchControls.Add(Me.chkAllowExit)
-        DeathMatchControls.Add(Me.chkAllowPwrUps)
-        DeathMatchControls.Add(Me.chkArmorSpawn)
-        DeathMatchControls.Add(Me.chkHealthSpawn)
-        DeathMatchControls.Add(Me.chkWeaponsStay)
-        DeathMatchControls.Add(Me.chkSameMap)
-        DeathMatchControls.Add(Me.chkSpawnFarthest)
-        DeathMatchControls.Add(Me.chkLoseFrag)
-        DeathMatchControls.Add(Me.chkKeepFragsGained)
-        DeathMatchControls.Add(Me.chkRespawnProtection)
-        DeathMatchControls.Add(Me.chkTeamSwitching)
-
-        For Each Control As Control In DeathMatchControls
-            Control.Enabled = False
-        Next
+        GetNetworkStuff()
 
     End Sub
 
@@ -158,10 +144,14 @@ Public Class frmMain
 
         'Clear the map combobox here
         cboMap.Items.Clear()
-        For Each item As String In WAD.IO.WAD.LumpNames
+        For Each item As String In WAD.IO.WAD.MapNames
             cboMap.Items.Add(item)
         Next item
 
+        'TextBox1.Clear()
+        'For Each lump In WAD.IO.WAD.LumpNames
+        '    TextBox1.AppendText(lump & Environment.NewLine)
+        'Next
     End Sub
     Private Function BuildPatchList(PatchList As CheckedListBox) As String
         Dim sb As New StringBuilder
@@ -199,7 +189,11 @@ Public Class frmMain
         End If
 
         If radHost.Checked = True Then
-            NetSettings = (" -host " & cboPlayers.SelectedItem.ToString)
+            If cboPlayers.SelectedIndex = -1 Then
+            Else
+                NetSettings = (" -host " & cboPlayers.SelectedItem.ToString)
+            End If
+
         ElseIf radJoin.Checked = True Then
             'Check to see if IP Address was forgotten to be entered
             If txtIPAddress.Text = "" Then
@@ -282,13 +276,9 @@ Public Class frmMain
         SkillLvlPopulate()
     End Sub
 
-    Private Sub chkDeathMatch_CheckedChanged(sender As Object, e As EventArgs) Handles chkDeathMatch.CheckedChanged
-        For Each Control As Control In DeathMatchControls
-            If chkDeathMatch.Checked = True Then
-                Control.Enabled = True
-            Else
-                Control.Enabled = False
-            End If
-        Next
+    Private Sub tmrBuildCmd_Tick(sender As Object, e As EventArgs) Handles tmrBuildCmd.Tick
+        txtZDArgs.Text = BuildCmd().ToString
     End Sub
+
+
 End Class

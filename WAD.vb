@@ -12,6 +12,7 @@ Namespace WAD.IO
         Public Const PWAD As String = "PWAD"
 
         Public Shared LumpNames As List(Of String)
+        Public Shared MapNames As List(Of String)
 
         'Encoder
         Public Shared ReadOnly WADEncoding As Encoding = Encoding.ASCII
@@ -84,6 +85,7 @@ Namespace WAD.IO
             Offset = reader.ReadInt32
 
             LumpNames = New List(Of String)
+            MapNames = New List(Of String)
 
             reader.BaseStream.Seek(Offset, SeekOrigin.Begin)
 
@@ -96,8 +98,12 @@ Namespace WAD.IO
                 'Add lump name to list if it's a map name
                 If LumpName.Length > 3 Then
                     If LumpName.StartsWith("E") And Char.IsDigit(LumpName(1)) Then
-                        LumpNames.Add(LumpName)
+                        MapNames.Add(LumpName)
+                        'LumpNames.Add(LumpName)
                     ElseIf LumpName.StartsWith("MAP") And Char.IsDigit(LumpName(3)) Then
+                        MapNames.Add(LumpName)
+                        'LumpNames.Add(LumpName)
+                    Else
                         LumpNames.Add(LumpName)
                     End If
                 End If
