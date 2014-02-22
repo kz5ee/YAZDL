@@ -170,17 +170,8 @@ Public Class frmMain
     Private Function BuildCmd()
         Dim CmdArgs As New StringBuilder
         Dim IWADFile As String = String.Empty
-        Dim CheatsEn As String = String.Empty
-        Dim NoMonsters As String = String.Empty
-        Dim FastMonsters As String = String.Empty
-        Dim Deathmatch As String = String.Empty
-        Dim Respawn As String = String.Empty
         Dim Map As String = String.Empty
-        Dim NetSettings As String = String.Empty
         Dim Patch2Load As String = String.Empty
-        Dim DblAmmo As String = String.Empty
-        Dim InfAmmo As String = String.Empty
-        Dim RomeroDeath As String = String.Empty
         Dim SkillLevel As String = String.Empty
 
         If lstIWads.SelectedIndex = -1 Then
@@ -188,8 +179,32 @@ Public Class frmMain
             IWADFile = (" -iwad " & lstIWads.SelectedItem.ToString)
         End If
 
+        If cboMap.Text <> "" Then
+            Map = (" +map " & cboMap.Text)
+        End If
+        If cboMap.Text <> "" Then
+            SkillLevel = (" -skill " & cboSkillLevel.SelectedIndex + 1)
+        End If
+        If (lstPatch.CheckedIndices.Count > 0) Then
+            CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & (" -file " & BuildPatchList(lstPatch)) & _
+                            BuildGamePlayString())
+        Else
+            CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & _
+                            BuildGamePlayString())
+            'CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & BuildGamePlayString())
+        End If
+
+        Return CmdArgs.ToString().TrimEnd()
+    End Function
+
+    Private Function BuildMPString()
+        Dim MPArgs As New StringBuilder
+        Dim Deathmatch As String = String.Empty
+        Dim NetSettings As String = String.Empty
+
         If radHost.Checked = True Then
             If cboPlayers.SelectedIndex = -1 Then
+                'Don't do anything
             Else
                 NetSettings = (" -host " & cboPlayers.SelectedItem.ToString)
             End If
@@ -206,9 +221,22 @@ Public Class frmMain
         If chkDeathMatch.Checked = True Then
             Deathmatch = " -deathmatch"
         End If
-        If chkCheatsEn.Checked = True Then
-            CheatsEn = " +sv_cheats 1 "
-        End If
+
+        MPArgs.Append(NetSettings & Deathmatch)
+
+        Return MPArgs.ToString().TrimEnd()
+    End Function
+
+    Private Function BuildGamePlayString()
+        Dim GPString As New StringBuilder
+        Dim DblAmmo As String = String.Empty
+        Dim InfAmmo As String = String.Empty
+        Dim CheatsEn As String = String.Empty
+        Dim NoMonsters As String = String.Empty
+        Dim FastMonsters As String = String.Empty
+        Dim Respawn As String = String.Empty
+        Dim RomeroDeath As String = String.Empty
+
         If chkNoMonsters.Checked = True Then
             NoMonsters = " -nomonsters"
         End If
@@ -217,6 +245,9 @@ Public Class frmMain
         End If
         If chkMonsterRespawn.Checked = True Then
             Respawn = " -respawn"
+        End If
+        If chkCheatsEn.Checked = True Then
+            CheatsEn = " +sv_cheats 1 "
         End If
         If chkDblAmmo.Checked = True Then
             DblAmmo = " +set sv_doubleammo 1"
@@ -227,35 +258,63 @@ Public Class frmMain
         If chkKillSpawn.Checked = True Then
             RomeroDeath = " +set sv_killbossmonst 1"
         End If
-        If cboMap.Text <> "" Then
-            Map = (" +map " & cboMap.Text)
-        End If
-        If cboMap.Text <> "" Then
-            SkillLevel = (" -skill " & cboSkillLevel.SelectedIndex + 1)
-        End If
-        If (lstPatch.CheckedIndices.Count > 0) Then
-            CmdArgs.Append(IWADFile & NetSettings & Deathmatch & NoMonsters & Respawn & _
-                           FastMonsters & (" -file " & BuildPatchList(lstPatch)) & Map & SkillLevel & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
-        Else
-            CmdArgs.Append(IWADFile & NetSettings & Deathmatch & NoMonsters & Respawn & FastMonsters & Map & SkillLevel & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
-        End If
 
-        Return CmdArgs.ToString().TrimEnd()
-    End Function
+        GPString.Append(NoMonsters & FastMonsters & Respawn & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
 
-    Private Function BuildMPString()
-
-    End Function
-
-    Private Function BuildGamePlayString()
-
-    End Function
-
-    Private Function BuildPatchListString()
-
+        Return GPString.ToString().TrimEnd()
     End Function
 
     Private Function BuildDMString()
+        Dim DeathMatchString As New StringBuilder
+        Dim WeaponsStay As String = String.Empty
+        Dim DisablePU As String = String.Empty
+        Dim DisableHealthSpwn As String = String.Empty
+        Dim DisableArmorSpwn As String = String.Empty
+        Dim SpawnFarthest As String = String.Empty
+        Dim SameMap As String = String.Empty
+        Dim DisableExit As String = String.Empty
+        Dim RSpwnProtect As String = String.Empty
+        Dim LoseFrag As String = String.Empty
+        Dim KeepFrags As String = String.Empty
+        Dim NoTeamSwitch As String = String.Empty
+
+        If chkWeaponsStay.Checked = True Then
+
+        End If
+        If chkAllowPwrUps.Checked = True Then
+
+        End If
+        If chkHealthSpawn.Checked = True Then
+
+        End If
+        If chkArmorSpawn.Checked = True Then
+
+        End If
+        If chkSpawnFarthest.Checked = True Then
+
+        End If
+        If chkSameMap.Checked = True Then
+
+        End If
+        If chkAllowExit.Checked = True Then
+
+        End If
+        If chkRespawnProtection.Checked = True Then
+
+        End If
+        If chkLoseFrag.Checked = True Then
+
+        End If
+        If chkKeepFragsGained.Checked = True Then
+
+        End If
+        If chkWeaponsStay.Checked = True Then
+
+        End If
+
+        'DeathMatchString.Append()
+
+        Return DeathMatchString.ToString().TrimEnd()
 
     End Function
 
