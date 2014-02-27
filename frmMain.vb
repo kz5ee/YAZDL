@@ -1,4 +1,10 @@
-﻿Imports System.Net
+﻿#Region "LICENSE_NOTICE"
+'This Source Code Form is subject to the terms of the Mozilla Public
+'License, v. 2.0. If a copy of the MPL was not distributed with this
+'file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#End Region
+
+Imports System.Net
 Imports System.IO
 Imports System.Text
 Imports YAZDL.WAD.IO
@@ -7,8 +13,6 @@ Public Class frmMain
     Public OldListItem As String = vbNullString
     Public ZDExeFile As String = String.Empty
     Public FileArgs As List(Of String)
-
-    Private DeathMatchControls As New List(Of Control)
 
     Private Sub btnZDoomDir_Click(sender As Object, e As EventArgs) Handles btnZDoomDir.Click
         Dim ZDoomFolder As String
@@ -28,7 +32,10 @@ Public Class frmMain
             ZDExeFile = My.Settings.ZDoomExecutable
             txtPath.Text = Path.GetDirectoryName(ZDExeFile)
             GetWadFiles(txtPath.Text)
+            sslZDFolderSelected.Text = "ZDoom File Selected"
             SkillLvlPopulate()
+        Else
+            sslZDFolderSelected.Text = "Click 'Open File' to load ZDoom executable"
         End If
 
         GetNetworkStuff()
@@ -38,7 +45,6 @@ Public Class frmMain
     Private Sub GetWadFiles(ByVal Folder As String)
         ' make a reference to a directory
         Dim dir As New IO.DirectoryInfo(Folder)
-        'Dim WADList As IO.FileInfo() = dir.GetFiles("*.wad")
         Dim WADList As IO.FileInfo() = dir.GetFiles.Where(Function(fi) fi.Extension.ToLower = ".wad" Or fi.Extension.ToLower = ".pk3").ToArray
         Dim WADFile As IO.FileInfo
         Dim IsIWAD As Boolean
@@ -66,27 +72,6 @@ Public Class frmMain
 
             End If
         Next
-
-    End Sub
-
-    Private Sub txtIPAddress_TextChanged(sender As Object, e As EventArgs) Handles txtIPAddress.TextChanged
-
-        If IPAddress.TryParse(txtIPAddress.Text, Nothing) = True Then
-            lblIPValidity.ForeColor = Color.Green
-            lblIPValidity.Text = "IP Valid"
-            lblIPValidity.Visible = True
-        Else
-            lblIPValidity.ForeColor = Color.Red
-            lblIPValidity.Text = "IP Invalid"
-            lblIPValidity.Visible = True
-        End If
-
-    End Sub
-
-    Private Sub txtIPAddress_GotFocus(sender As Object, e As EventArgs) Handles txtIPAddress.GotFocus
-        If txtIPAddress.Text = "" Then
-            lblIPValidity.Visible = False
-        End If
 
     End Sub
 
@@ -148,19 +133,18 @@ Public Class frmMain
             cboMap.Items.Add(item)
         Next item
 
-        'TextBox1.Clear()
-        'For Each lump In WAD.IO.WAD.LumpNames
-        '    TextBox1.AppendText(lump & Environment.NewLine)
-        'Next
     End Sub
     Private Function BuildPatchList(PatchList As CheckedListBox) As String
-        Dim sb As New StringBuilder
-
-        For pIndex As Integer = 0 To PatchList.CheckedItems.Count - 1
-            sb.Append(PatchList.CheckedItems(pIndex).ToString & " ")
-        Next
-
-        Return sb.ToString().TrimEnd()
+        Dim PatchString As New StringBuilder
+        If (lstPatch.CheckedIndices.Count > 0) Then
+            PatchString.Append(" -file ")
+            For pIndex As Integer = 0 To PatchList.CheckedItems.Count - 1
+                PatchString.Append(PatchList.CheckedItems(pIndex).ToString & " ")
+            Next
+        Else
+            PatchString.Append(vbNullString)
+        End If
+        Return PatchString.ToString().TrimEnd()
     End Function
 
     Private Sub btnBuildCmd_Click(sender As Object, e As EventArgs) Handles btnBuildCmd.Click
@@ -185,14 +169,9 @@ Public Class frmMain
         If cboMap.Text <> "" Then
             SkillLevel = (" -skill " & cboSkillLevel.SelectedIndex + 1)
         End If
-        If (lstPatch.CheckedIndices.Count > 0) Then
-            CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & (" -file " & BuildPatchList(lstPatch)) & _
-                            BuildGamePlayString())
-        Else
-            CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & _
-                            BuildGamePlayString())
-            'CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & BuildGamePlayString())
-        End If
+
+        CmdArgs.Append(IWADFile & BuildMPString() & Map & SkillLevel & BuildPatchList(lstPatch) & _
+                        BuildGamePlayString() & BuildDMString() & BuildCoOpString())
 
         Return CmdArgs.ToString().TrimEnd()
     End Function
@@ -212,11 +191,11 @@ Public Class frmMain
         ElseIf radJoin.Checked = True Then
             'Check to see if IP Address was forgotten to be entered
             If txtIPAddress.Text = "" Then
-                MessageBox.Show("IP Address not entered.  Enter IP Address and try again", "You've fucked up", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                '
                 Return vbNullString
+            Else
+                NetSettings = (" -join " & txtIPAddress.Text)
             End If
-            NetSettings = (" -join " & txtIPAddress.Text)
+
         End If
         If chkDeathMatch.Checked = True Then
             Deathmatch = " -deathmatch"
@@ -236,6 +215,7 @@ Public Class frmMain
         Dim FastMonsters As String = String.Empty
         Dim Respawn As String = String.Empty
         Dim RomeroDeath As String = String.Empty
+        Dim ForceRespawn As String = String.Empty
 
         If chkNoMonsters.Checked = True Then
             NoMonsters = " -nomonsters"
@@ -258,8 +238,11 @@ Public Class frmMain
         If chkKillSpawn.Checked = True Then
             RomeroDeath = " +set sv_killbossmonst 1"
         End If
+        If chkForceRespawn.Checked = True Then
+            ForceRespawn = " +set sv_forcerespawn 1"
+        End If
 
-        GPString.Append(NoMonsters & FastMonsters & Respawn & CheatsEn & DblAmmo & InfAmmo & RomeroDeath)
+        GPString.Append(NoMonsters & FastMonsters & Respawn & CheatsEn & DblAmmo & InfAmmo & RomeroDeath & ForceRespawn)
 
         Return GPString.ToString().TrimEnd()
     End Function
@@ -279,46 +262,90 @@ Public Class frmMain
         Dim NoTeamSwitch As String = String.Empty
 
         If chkWeaponsStay.Checked = True Then
-
+            WeaponsStay = " +set sv_weaponstay 1"
         End If
         If chkAllowPwrUps.Checked = True Then
-
+            DisablePU = " +set sv_noitems 1"
         End If
         If chkHealthSpawn.Checked = True Then
-
+            DisableHealthSpwn = " +set sv_nohealth 1"
         End If
         If chkArmorSpawn.Checked = True Then
-
+            DisableArmorSpwn = " +set sv_noarmor 1"
         End If
         If chkSpawnFarthest.Checked = True Then
-
+            SpawnFarthest = " +set sv_spawnfarthest 1"
         End If
         If chkSameMap.Checked = True Then
-
+            SameMap = " +set sv_samelevel 1"
         End If
         If chkAllowExit.Checked = True Then
-
+            DisableExit = " +set sv_noexit 1"
         End If
         If chkRespawnProtection.Checked = True Then
-
+            RSpwnProtect = " +set sv_respawnprotect 1"
         End If
         If chkLoseFrag.Checked = True Then
-
+            LoseFrag = " +set sv_losefrag 1"
         End If
         If chkKeepFragsGained.Checked = True Then
-
+            KeepFrags = " +set sv_keepfrags 1"
         End If
-        If chkWeaponsStay.Checked = True Then
-
+        If chkTeamSwitching.Checked = True Then
+            NoTeamSwitch = " +set sv_noteamswitch 1"
         End If
 
-        'DeathMatchString.Append()
+        DeathMatchString.Append(WeaponsStay & DisablePU & DisableHealthSpwn & DisableArmorSpwn & SpawnFarthest & SameMap & DisableExit & _
+                                RSpwnProtect & LoseFrag & KeepFrags & NoTeamSwitch)
 
         Return DeathMatchString.ToString().TrimEnd()
 
     End Function
 
     Private Function BuildCoOpString()
+        Dim CoOpString As New StringBuilder
+        Dim MPWeaponsSpwn As String = String.Empty
+        Dim LoseInventory As String = String.Empty
+        Dim KeepKeys As String = String.Empty
+        Dim KeepWeapons As String = String.Empty
+        Dim KeepArmor As String = String.Empty
+        Dim KeepPU As String = String.Empty
+        Dim KeepAmmo As String = String.Empty
+        Dim LoseHalfAmmo As String = String.Empty
+        Dim SpwnDeathSpot As String = String.Empty
+
+        If chkNoMPWeapons.Checked = True Then
+            MPWeaponsSpwn = " +set sv_noweaponspawn 1"
+        End If
+        If chkLoseInventory.Checked = True Then
+            LoseInventory = " +set sv_cooploseinventory 1"
+        End If
+        If chkLoseKeys.Checked = True Then
+            KeepKeys = " +set sv_cooplosekeys 1"
+        End If
+        If chkLoseWeapons.Checked = True Then
+            KeepWeapons = " +set sv_cooploseweapons 1"
+        End If
+        If chkLoseArmor.Checked = True Then
+            KeepArmor = " +set sv_cooplosearmor 1"
+        End If
+        If chkLosePowerUps.Checked = True Then
+            KeepPU = " +set sv_cooplosepowerups 1"
+        End If
+        If chkLoseAmmo.Checked = True Then
+            KeepAmmo = " +set sv_cooploseammo 1"
+        End If
+        If chkLoseHalfAmmo.Checked = True Then
+            LoseHalfAmmo = " +set sv_coophalveammo 1"
+        End If
+        If chkSpawnDeathspot.Checked = True Then
+            SpwnDeathSpot = " +set sv_samespawnspot 1"
+        End If
+
+        CoOpString.Append(MPWeaponsSpwn & LoseInventory & KeepKeys & KeepWeapons & KeepArmor & KeepPU & KeepAmmo & _
+                          LoseHalfAmmo & SpwnDeathSpot)
+
+        Return CoOpString.ToString().TrimEnd()
 
     End Function
 
@@ -346,7 +373,8 @@ Public Class frmMain
             If (MessageBox.Show("Remember ZDoom Folders?", "Save Settings?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes) Then
                 My.Settings.ZDoomExecutable = ZDExeFile
             Else
-                End
+                ZDExeFile = ""
+                My.Settings.ZDoomExecutable = ZDExeFile
             End If
         End If
     End Sub
@@ -358,4 +386,5 @@ Public Class frmMain
     Private Sub tmrBuildCmd_Tick(sender As Object, e As EventArgs) Handles tmrBuildCmd.Tick
         txtZDArgs.Text = BuildCmd().ToString
     End Sub
+
 End Class

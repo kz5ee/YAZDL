@@ -43,6 +43,8 @@ Partial Class frmMain
         Me.chkDeathMatch = New System.Windows.Forms.CheckBox()
         Me.radSinglePlayer = New System.Windows.Forms.RadioButton()
         Me.tbpGameType = New System.Windows.Forms.TabPage()
+        Me.lblSkill = New System.Windows.Forms.Label()
+        Me.lblMap = New System.Windows.Forms.Label()
         Me.chkBrutalDoom = New System.Windows.Forms.CheckBox()
         Me.cboMap = New System.Windows.Forms.ComboBox()
         Me.cboSkillLevel = New System.Windows.Forms.ComboBox()
@@ -81,6 +83,9 @@ Partial Class frmMain
         Me.chkNoMPWeapons = New System.Windows.Forms.CheckBox()
         Me.btnBuildCmd = New System.Windows.Forms.Button()
         Me.tmrBuildCmd = New System.Windows.Forms.Timer(Me.components)
+        Me.ttpBrutalDoom = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ssYAZDL = New System.Windows.Forms.StatusStrip()
+        Me.sslZDFolderSelected = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tbcGameSettings.SuspendLayout()
         Me.tbpMultiplayer.SuspendLayout()
         Me.tbpGameType.SuspendLayout()
@@ -88,6 +93,7 @@ Partial Class frmMain
         Me.tbpGamePlay.SuspendLayout()
         Me.tpgDeathmatch.SuspendLayout()
         Me.tpgCoOp.SuspendLayout()
+        Me.ssYAZDL.SuspendLayout()
         Me.SuspendLayout()
         '
         'lstIWads
@@ -101,11 +107,11 @@ Partial Class frmMain
         '
         'btnZDoomDir
         '
-        Me.btnZDoomDir.Location = New System.Drawing.Point(12, 319)
+        Me.btnZDoomDir.Location = New System.Drawing.Point(28, 317)
         Me.btnZDoomDir.Name = "btnZDoomDir"
-        Me.btnZDoomDir.Size = New System.Drawing.Size(99, 23)
+        Me.btnZDoomDir.Size = New System.Drawing.Size(83, 29)
         Me.btnZDoomDir.TabIndex = 1
-        Me.btnZDoomDir.Text = "ZDoom Folder"
+        Me.btnZDoomDir.Text = "Open File"
         Me.btnZDoomDir.UseVisualStyleBackColor = True
         '
         'txtPath
@@ -249,7 +255,8 @@ Partial Class frmMain
         Me.lstIpAddresses.FormattingEnabled = True
         Me.lstIpAddresses.Location = New System.Drawing.Point(4, 163)
         Me.lstIpAddresses.Name = "lstIpAddresses"
-        Me.lstIpAddresses.Size = New System.Drawing.Size(276, 69)
+        Me.lstIpAddresses.SelectionMode = System.Windows.Forms.SelectionMode.None
+        Me.lstIpAddresses.Size = New System.Drawing.Size(322, 69)
         Me.lstIpAddresses.TabIndex = 9
         '
         'chkDeathMatch
@@ -277,6 +284,8 @@ Partial Class frmMain
         '
         'tbpGameType
         '
+        Me.tbpGameType.Controls.Add(Me.lblSkill)
+        Me.tbpGameType.Controls.Add(Me.lblMap)
         Me.tbpGameType.Controls.Add(Me.chkBrutalDoom)
         Me.tbpGameType.Controls.Add(Me.cboMap)
         Me.tbpGameType.Controls.Add(Me.cboSkillLevel)
@@ -288,21 +297,40 @@ Partial Class frmMain
         Me.tbpGameType.Text = "Game"
         Me.tbpGameType.UseVisualStyleBackColor = True
         '
+        'lblSkill
+        '
+        Me.lblSkill.AutoSize = True
+        Me.lblSkill.Location = New System.Drawing.Point(6, 90)
+        Me.lblSkill.Name = "lblSkill"
+        Me.lblSkill.Size = New System.Drawing.Size(47, 13)
+        Me.lblSkill.TabIndex = 5
+        Me.lblSkill.Text = "Difficulty"
+        '
+        'lblMap
+        '
+        Me.lblMap.AutoSize = True
+        Me.lblMap.Location = New System.Drawing.Point(3, 25)
+        Me.lblMap.Name = "lblMap"
+        Me.lblMap.Size = New System.Drawing.Size(28, 13)
+        Me.lblMap.TabIndex = 4
+        Me.lblMap.Text = "Map"
+        '
         'chkBrutalDoom
         '
         Me.chkBrutalDoom.AutoSize = True
-        Me.chkBrutalDoom.Location = New System.Drawing.Point(185, 41)
+        Me.chkBrutalDoom.Location = New System.Drawing.Point(196, 65)
         Me.chkBrutalDoom.Name = "chkBrutalDoom"
         Me.chkBrutalDoom.Size = New System.Drawing.Size(84, 17)
         Me.chkBrutalDoom.TabIndex = 3
         Me.chkBrutalDoom.Text = "Brutal Doom"
+        Me.ttpBrutalDoom.SetToolTip(Me.chkBrutalDoom, "Check to use Brutal Doom" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "difficulty levels")
         Me.chkBrutalDoom.UseVisualStyleBackColor = True
         '
         'cboMap
         '
         Me.cboMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboMap.FormattingEnabled = True
-        Me.cboMap.Location = New System.Drawing.Point(6, 86)
+        Me.cboMap.Location = New System.Drawing.Point(6, 41)
         Me.cboMap.Name = "cboMap"
         Me.cboMap.Size = New System.Drawing.Size(121, 21)
         Me.cboMap.TabIndex = 2
@@ -311,7 +339,7 @@ Partial Class frmMain
         '
         Me.cboSkillLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboSkillLevel.FormattingEnabled = True
-        Me.cboSkillLevel.Location = New System.Drawing.Point(6, 148)
+        Me.cboSkillLevel.Location = New System.Drawing.Point(6, 106)
         Me.cboSkillLevel.Name = "cboSkillLevel"
         Me.cboSkillLevel.Size = New System.Drawing.Size(198, 21)
         Me.cboSkillLevel.TabIndex = 1
@@ -687,12 +715,31 @@ Partial Class frmMain
         'tmrBuildCmd
         '
         '
+        'ttpBrutalDoom
+        '
+        Me.ttpBrutalDoom.IsBalloon = True
+        '
+        'ssYAZDL
+        '
+        Me.ssYAZDL.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sslZDFolderSelected})
+        Me.ssYAZDL.Location = New System.Drawing.Point(0, 626)
+        Me.ssYAZDL.Name = "ssYAZDL"
+        Me.ssYAZDL.Size = New System.Drawing.Size(598, 22)
+        Me.ssYAZDL.TabIndex = 9
+        Me.ssYAZDL.Text = "StatusStrip1"
+        '
+        'sslZDFolderSelected
+        '
+        Me.sslZDFolderSelected.Name = "sslZDFolderSelected"
+        Me.sslZDFolderSelected.Size = New System.Drawing.Size(0, 17)
+        '
         'frmMain
         '
         Me.AcceptButton = Me.btnRunZDoom
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(598, 648)
+        Me.Controls.Add(Me.ssYAZDL)
         Me.Controls.Add(Me.btnBuildCmd)
         Me.Controls.Add(Me.tbcGameSettings)
         Me.Controls.Add(Me.txtZDArgs)
@@ -703,7 +750,7 @@ Partial Class frmMain
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "YAZDL:  Yet Another ZDoom Launcher *BETA*"
+        Me.Text = "YAZDL:  Yet Another ZDoom Launcher"
         Me.tbcGameSettings.ResumeLayout(False)
         Me.tbpMultiplayer.ResumeLayout(False)
         Me.tbpMultiplayer.PerformLayout()
@@ -716,6 +763,8 @@ Partial Class frmMain
         Me.tpgDeathmatch.PerformLayout()
         Me.tpgCoOp.ResumeLayout(False)
         Me.tpgCoOp.PerformLayout()
+        Me.ssYAZDL.ResumeLayout(False)
+        Me.ssYAZDL.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -777,5 +826,10 @@ Partial Class frmMain
     Friend WithEvents chkLoseInventory As System.Windows.Forms.CheckBox
     Friend WithEvents chkNoMPWeapons As System.Windows.Forms.CheckBox
     Friend WithEvents lstIpAddresses As System.Windows.Forms.ListBox
+    Friend WithEvents lblSkill As System.Windows.Forms.Label
+    Friend WithEvents lblMap As System.Windows.Forms.Label
+    Friend WithEvents ttpBrutalDoom As System.Windows.Forms.ToolTip
+    Friend WithEvents ssYAZDL As System.Windows.Forms.StatusStrip
+    Friend WithEvents sslZDFolderSelected As System.Windows.Forms.ToolStripStatusLabel
 
 End Class

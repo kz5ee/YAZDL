@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("YAZDL:  Yet Another ZDoom Launcher")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("Licensed under Mozilla Public License 2.0")> 
 <Assembly: AssemblyCompany("KZ5EE")> 
 <Assembly: AssemblyProduct("YAZDL")> 
 <Assembly: AssemblyCopyright("Copyright © KZ5EE 2014")> 

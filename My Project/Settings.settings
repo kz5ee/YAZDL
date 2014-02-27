@@ -5,7 +5,7 @@
     <Setting Name="ZDoomExecutable" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="BDChecked" Type="System.Boolean" Scope="User">
+    <Setting Name="IPAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

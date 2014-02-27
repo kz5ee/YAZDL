@@ -67,13 +67,14 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property BDChecked() As Boolean
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property IPAddress() As String
             Get
-                Return CType(Me("BDChecked"),Boolean)
+                Return CType(Me("IPAddress"),String)
             End Get
             Set
-                Me("BDChecked") = value
+                Me("IPAddress") = value
             End Set
         End Property
     End Class
