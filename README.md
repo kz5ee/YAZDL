@@ -1,2 +1,2 @@
-ZDoom_Launcher
-==============
+YAZDL:  Yet Another ZDoom Launcher
+==================================
